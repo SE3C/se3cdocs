@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>SE3C Docs</title>
+    
+    <!-- GitHub Pages Clean URL Hack (Start) -->
+    <script type="text/javascript">
+      (function (l) {
+        var params = new URLSearchParams(l.search);
+        var redirectedPath = params.get('p');
+
+        if (!redirectedPath && l.search[1] === '/') {
+          redirectedPath = l.search.slice(1).split('&').map(function (segment) {
+            return segment.replace(/~and~/g, '&');
+          }).join('?');
+        }
+
+        if (!redirectedPath) {
+          return;
+        }
+
+        var normalizedPath = redirectedPath.charAt(0) === '/' ? redirectedPath : '/' + redirectedPath;
+        var redirectedQuery = params.get('q');
+        var nextSearch = redirectedQuery ? '?' + redirectedQuery.replace(/~and~/g, '&') : '';
+
+        window.history.replaceState(null, null, normalizedPath + nextSearch + l.hash);
+      }(window.location));
+    </script>
+    <!-- GitHub Pages Clean URL Hack (End) -->
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="src/main.tsx"></script>
+  </body>
+</html>
