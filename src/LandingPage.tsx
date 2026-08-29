@@ -40,7 +40,7 @@ export default function LandingPage() {
     <main>
       <section className="mission-hero">
         <img src={heroImage} alt="SE3C 제작 활동" className="project-media" /><div className="mission-hero-overlay" />
-        <div className="mission-hero-copy"><p className="eyebrow">SE3C · SPACE EXPLORATION ENGINEERING EXPERIMENTAL CLUB</p><h1>상상하던 걸,<br />실제 프로젝트로<span className="mobile-title-break"><br /></span> 만들다.</h1><p>설계하고, 만들고, 시험하고, 기록합니다.<br />SE3C는 공학의 다음 단계를 직접 검증합니다.</p></div>
+        <div className="mission-hero-copy"><p className="eyebrow">SE3C · SPACE EXPLORATION ENGINEERING EXPERIMENTAL CLUB</p><h1>Turning Ideas<br />Into Real<br />Projects.</h1><p>설계하고, 만들고, 시험하고, 기록합니다.<br />SE3C는 공학의 다음 단계를 직접 검증합니다.</p></div>
         <a href="#mission" aria-label="미션으로 이동" className="scroll-cue"><ArrowDown size={22} /></a>
       </section>
       <section id="mission" className="mission-statement">
