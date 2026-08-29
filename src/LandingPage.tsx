@@ -1,226 +1,124 @@
+import { ArrowDown, ArrowRight, Github } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import heroImage from "./assets/expo-booth.jpg";
-import satelliteImage from "./assets/satellite-prototype.jpeg";
-import nozzleImage from "./assets/nozzle-model.jpg";
-import teamPhoto from "./assets/team-photo.jpeg";
-import { detailPages, getDetailPath } from "./siteDetails";
+import cubesatImage from "./assets/2026/cubesat-integration.webp";
+import rocketImage from "./assets/2026/rocket-workbench.webp";
+import ncrcPosterImage from "./assets/2026/ncrc-h1-poster.webp";
+import fabricationImage from "./assets/nozzle-model.jpg";
 import PublicHeader from "./PublicHeader";
 import PublicFooter from "./PublicFooter";
 import useHideChromeOnScroll from "./useHideChromeOnScroll";
 
-const techDetails = detailPages.filter((detail) => detail.category === "tech");
-const overviewDetails = detailPages.filter((detail) => ["team", "roadmap", "credibility"].includes(detail.id));
-const operationsDetails = detailPages.filter((detail) => ["budget", "records", "links", "members"].includes(detail.id));
+type ProjectSectionProps = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  to: string;
+  image: string;
+  align?: "left" | "right";
+  video?: string;
+  muted?: boolean;
+};
+
+function ProjectSection({ eyebrow, title, description, to, image, align = "left", video, muted = false }: ProjectSectionProps) {
+  return (
+    <section className="project-panel">
+      {video ? (
+        <video className="project-media" autoPlay muted loop playsInline preload="metadata" poster={image}>
+          <source src={video} type="video/mp4" />
+        </video>
+      ) : (
+        <img src={image} alt="" className="project-media" loading="lazy" />
+      )}
+      <div className={`project-overlay ${muted ? "project-overlay-heavy" : ""}`} />
+      <div className={`project-copy ${align === "right" ? "project-copy-right" : ""}`}>
+        <p className="eyebrow">{eyebrow}</p>
+        <h2>{title}</h2>
+        <p className="project-description">{description}</p>
+        <Link to={to} className="outline-cta">자세히 보기 <ArrowRight size={16} /></Link>
+      </div>
+    </section>
+  );
+}
 
 export default function LandingPage() {
   const isChromeHidden = useHideChromeOnScroll();
   const location = useLocation();
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "auto" });
-  }, [location.pathname]);
+  useEffect(() => { window.scrollTo({ top: 0, behavior: "auto" }); }, [location.pathname]);
 
   return (
-    <div className="page-enter relative min-h-screen bg-[#050505] text-slate-100">
+    <div className="bg-black text-white">
       <PublicHeader isChromeHidden={isChromeHidden} />
-
-      <main className="w-full px-3 pb-8 pt-3 sm:px-4 md:px-6 md:pb-10 md:pt-6">
-        <section id="mission" className="mb-4 overflow-hidden rounded-2xl border border-slate-800 bg-slate-950/50 md:mb-8 md:rounded-3xl">
-          <div className="relative">
-            <img src={heroImage} alt="SE3C activity" className="h-[46vh] min-h-[320px] w-full bg-black object-contain sm:h-[54vh] md:h-[76vh]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 md:p-10">
-              <p className="text-[10px] uppercase tracking-[0.16em] text-slate-300 sm:text-xs">BOIN HIGH SCHOOL ADVANCED SPACE TECH CLUB</p>
-              <h1 className="mt-2 max-w-5xl text-2xl font-semibold leading-tight text-white sm:mt-3 sm:text-3xl md:text-5xl">
-                상상하던 것을 실제 구조와 기록으로 남기는 보인고 우주공학 동아리, SE3C
-              </h1>
-              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-200 md:mt-4 md:text-base md:leading-7">
-                <span className="font-semibold text-white">SE3C</span>는 <span className="font-semibold text-white">Space Exploration Engineering Experimental Club</span>의 약자입니다.
-              </p>
-            </div>
+      <main>
+        <section className="hero-panel">
+          <img src={heroImage} alt="SE3C 활동" className="project-media" />
+          <div className="hero-overlay" />
+          <div className="hero-copy">
+            <p className="eyebrow">SE3C · 우주탐사공학실험동아리</p>
+            <h1>상상하던 걸,<br />실제 프로젝트로 만들다.</h1>
+            <p className="hero-description">설계하고, 만들고, 시험하고, 기록합니다.<br className="hidden sm:block" /> 2026년 SE3C의 실제 공학 프로젝트를 소개합니다.</p>
+            <Link to="/tech" className="outline-cta">프로젝트 보기 <ArrowRight size={16} /></Link>
           </div>
-
-          <div className="grid grid-cols-2 gap-3 p-3 sm:p-4 md:grid-cols-4 md:gap-4 md:p-10">
-            <Link to="/budget" className="rounded-2xl border border-slate-800 bg-black/30 p-4 transition-all duration-300 hover:border-slate-600">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Budget</p>
-              <p className="mt-3 text-2xl font-semibold text-white">2.82M KRW</p>
-              <p className="mt-2 text-sm text-slate-300">예산 확보 전략과 외부 공모 탐색</p>
-            </Link>
-            <Link to="/members" className="rounded-2xl border border-slate-800 bg-black/30 p-4 transition-all duration-300 hover:border-slate-600">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Members</p>
-              <p className="mt-3 text-2xl font-semibold text-white">30</p>
-              <p className="mt-2 text-sm text-slate-300">역할 기반 인원 구성과 파트 배치</p>
-            </Link>
-            <Link to="/team" className="rounded-2xl border border-slate-800 bg-black/30 p-4 transition-all duration-300 hover:border-slate-600">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Teams</p>
-              <p className="mt-3 text-2xl font-semibold text-white">4</p>
-              <p className="mt-2 text-sm text-slate-300">운영, 하드웨어, 통신, 소프트웨어</p>
-            </Link>
-            <Link to="/roadmap" className="rounded-2xl border border-slate-800 bg-black/30 p-4 transition-all duration-300 hover:border-slate-600">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Target</p>
-              <p className="mt-3 text-2xl font-semibold text-white">Q4 2026</p>
-              <p className="mt-2 text-sm text-slate-300">검증 가능한 결과물과 발표 단계</p>
-            </Link>
-          </div>
+          <a href="#projects" aria-label="아래로 이동" className="scroll-cue"><ArrowDown size={22} /></a>
         </section>
 
-        <section id="tech" className="mb-6 rounded-3xl border border-slate-800 bg-slate-950/50 p-6 md:p-8">
-          <div className="mb-6 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Tech</p>
-              <h2 className="mt-2 text-xl font-semibold md:text-2xl">핵심 기술 영역</h2>
+        <div id="projects">
+          <ProjectSection
+            eyebrow="2026 PROJECT 01 · 큐브위성"
+            title="작은 위성을 직접 만들다."
+            description="Raspberry Pi 기반 온보드 컴퓨터와 센서 시스템을 통합하고, 실제 비행 데이터를 수집하기 위한 위성 프로토타입을 개발하고 있습니다."
+            to="/tech/cubesat"
+            image={cubesatImage}
+          />
+          <ProjectSection
+            eyebrow="2026 PROJECT 02 · 로켓공학"
+            title="설계에서 시험까지."
+            description="기체 구조, 추진, 회수와 제작 과정을 직접 다루며 반복적인 실험을 통해 로켓 시스템을 개선합니다."
+            to="/tech/rocket"
+            image={rocketImage}
+            align="right"
+          />
+          <ProjectSection
+            eyebrow="2026 PROJECT 03 · 로보틱스·AI"
+            title="휴머노이드에게 걷는 법을 학습시키다."
+            description="NCRC 2026을 준비하며 NVIDIA Isaac Sim / Isaac Lab 환경에서 Unitree H1 휴머노이드의 강화학습과 실험 재현성을 연구하고 있습니다."
+            to="/tech/robotics-ai"
+            image={ncrcPosterImage}
+            video="/media/ncrc-h1-play.mp4"
+          />
+          <ProjectSection
+            eyebrow="NEXT PROJECT · 3D 프린팅"
+            title="설계한 부품을 바로 현실로."
+            description="3D 프린터 도입 후 위성·로켓 프로젝트용 구조 부품, 센서 마운트와 실험 지그를 직접 설계하고 제작할 예정입니다."
+            to="/tech/fabrication"
+            image={fabricationImage}
+            align="right"
+            muted
+          />
+          <ProjectSection
+            eyebrow="NEXT FLIGHT · 고고도 비행시험"
+            title="실험실에서 하늘로."
+            description="관련 공역과 비행 허가 절차를 거친 뒤 웨더벌룬에 위성 프로토타입을 탑재해 실제 고고도 환경에서 telemetry를 수집하고 검증할 예정입니다."
+            to="/tech/high-altitude-flight"
+            image={cubesatImage}
+            muted
+          />
+        </div>
+
+        <section className="closing-panel">
+          <div className="mx-auto w-full max-w-[1500px] px-6 py-24 sm:px-8 md:py-32 lg:px-10">
+            <p className="eyebrow">2026 ENGINEERING LOG</p>
+            <h2 className="closing-title">결과보다 과정을 남깁니다.</h2>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-white/65">센서 벤치 테스트, 기체 통합, 강화학습 로그와 checkpoint, 제작 사진과 실패 기록까지. 다음 실험이 이전 실험에서 시작될 수 있도록 기록합니다.</p>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Link to="/credibility" className="outline-cta">활동 기록 보기 <ArrowRight size={16} /></Link>
+              <a href="https://github.com/SE3C" target="_blank" rel="noreferrer" className="text-cta"><Github size={17} /> GitHub에서 보기</a>
             </div>
-            <Link to="/tech" className="text-sm tracking-[0.14em] text-slate-300 transition hover:text-white">
-              자세히 보기
-            </Link>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {techDetails.map((detail) => (
-              <Link
-                key={detail.id}
-                to={getDetailPath(detail)}
-                className="group overflow-hidden rounded-2xl border border-slate-800 bg-black/30 transition-all duration-300 hover:border-slate-600"
-              >
-                <div className="relative">
-                  <img src={detail.image} alt={detail.title} className="h-56 w-full bg-black object-contain" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <p className="text-xs uppercase tracking-[0.18em] text-slate-300">{detail.label}</p>
-                    <p className="mt-2 text-xl font-medium text-white">{detail.title}</p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            <Link to="/tech/satellite" className="overflow-hidden rounded-2xl border border-slate-800 bg-black/30 transition-all duration-300 hover:border-slate-600">
-              <img src={satelliteImage} alt="SE3C satellite prototype" className="h-64 w-full bg-black object-contain" />
-              <div className="p-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Prototype</p>
-                <p className="mt-2 text-base font-medium text-white">
-                  센서 수집, 전송, 확인 흐름을 실제로 이어 붙이는 위성 통신 프로토타입 트랙입니다.
-                </p>
-              </div>
-            </Link>
-            <Link to="/tech/propulsion" className="overflow-hidden rounded-2xl border border-slate-800 bg-black/30 transition-all duration-300 hover:border-slate-600">
-              <img src={nozzleImage} alt="SE3C nozzle modeling" className="h-64 w-full bg-black object-contain" />
-              <div className="p-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Research</p>
-                <p className="mt-2 text-base font-medium text-white">
-                  노즐 구조, 연료 배합, 열 대응, 실패 기록까지 모두 포함하는 추진체 연구 트랙입니다.
-                </p>
-              </div>
-            </Link>
-          </div>
-        </section>
-
-        <section id="overview" className="mb-6 rounded-3xl border border-slate-800 bg-slate-950/50 p-6 md:p-8">
-          <div className="mb-6 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Team / Mission</p>
-              <h2 className="mt-2 text-xl font-semibold md:text-2xl">조직 구조와 연간 운영 방향</h2>
-            </div>
-            <Link to="/team" className="text-sm tracking-[0.14em] text-slate-300 transition hover:text-white">
-              자세히 보기
-            </Link>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {overviewDetails.map((detail) => (
-              <Link
-                key={detail.id}
-                to={getDetailPath(detail)}
-                className="group overflow-hidden rounded-2xl border border-slate-800 bg-black/30 transition-all duration-300 hover:border-slate-600"
-              >
-                <div className="relative">
-                  <img src={detail.image} alt={detail.title} className="h-64 w-full bg-black object-contain" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <p className="text-xs uppercase tracking-[0.18em] text-slate-300">{detail.label}</p>
-                    <p className="mt-2 text-2xl font-medium text-white">{detail.title}</p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
-            <Link to="/budget" className="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 transition-all duration-300 hover:border-slate-600">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Budget</p>
-              <p className="mt-2 text-sm leading-6 text-slate-300">교내 지원과 외부 기회를 함께 살피는 활동 예산 계획</p>
-            </Link>
-            <Link to="/records" className="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 transition-all duration-300 hover:border-slate-600">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Activity Logs</p>
-              <p className="mt-2 text-sm leading-6 text-slate-300">실험 결과, 실패 원인, 다음 계획까지 이어지는 기록 구조</p>
-            </Link>
-            <Link to="/links" className="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 transition-all duration-300 hover:border-slate-600">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Resources</p>
-              <p className="mt-2 text-sm leading-6 text-slate-300">자료, 계정, 홍보물을 함께 정리해 이어지는 협업 기반</p>
-            </Link>
-          </div>
-        </section>
-
-        <section id="operations" className="mb-6 rounded-3xl border border-slate-800 bg-slate-950/50 p-6 md:p-8">
-          <div className="mb-6 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Operations</p>
-              <h2 className="mt-2 text-xl font-semibold md:text-2xl">활동을 이어 가는 운영 기반</h2>
-            </div>
-            <Link to="/operations" className="text-sm tracking-[0.14em] text-slate-300 transition hover:text-white">
-              자세히 보기
-            </Link>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {operationsDetails.map((detail) => (
-              <Link
-                key={detail.id}
-                to={getDetailPath(detail)}
-                className="group rounded-2xl border border-slate-800 bg-black/30 p-5 transition-all duration-300 hover:border-slate-600"
-              >
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-500">{detail.label}</p>
-                <h3 className="mt-3 text-xl font-medium text-white">{detail.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-300">{detail.summary}</p>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section id="contact" className="rounded-3xl border border-slate-800 bg-slate-950/50 p-6 md:p-8">
-          <div className="mb-6 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Contact</p>
-              <h2 className="mt-2 text-xl font-semibold md:text-2xl">협업과 문의</h2>
-            </div>
-            <Link to="/credibility" className="text-sm tracking-[0.14em] text-slate-300 transition hover:text-white">
-              자세히 보기
-            </Link>
-          </div>
-
-          <div className="overflow-hidden rounded-2xl border border-slate-800 bg-black/30">
-            <img src={teamPhoto} alt="SE3C team photo" className="h-72 w-full bg-black object-contain" />
-          </div>
-
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
-            <Link to="/links" className="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 transition-all duration-300 hover:border-slate-600">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Email / Tools</p>
-              <p className="mt-2 text-sm leading-6 text-slate-300">공용 계정과 운영 링크를 정리한 페이지입니다.</p>
-            </Link>
-            <Link to="/records" className="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 transition-all duration-300 hover:border-slate-600">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Focus</p>
-              <p className="mt-2 text-sm leading-6 text-slate-300">기술 실험, 체험 운영, 기록 누적, 발표 자료 정리</p>
-            </Link>
-            <Link to="/members" className="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 transition-all duration-300 hover:border-slate-600">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">People</p>
-              <p className="mt-2 text-sm leading-6 text-slate-300">파트별 역할과 학생 참여 구조를 기반으로 팀 운영</p>
-            </Link>
           </div>
         </section>
       </main>
-
       <PublicFooter />
     </div>
   );

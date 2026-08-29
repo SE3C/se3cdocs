@@ -5,6 +5,16 @@ import expoBoothImage from "./assets/expo-booth.jpg";
 import expoInteriorImage from "./assets/expo-interior.jpg";
 import expoExperienceImage from "./assets/expo-experience.jpg";
 import expoGroupImage from "./assets/expo-group.jpg";
+import cubesatIntegrationImage from "./assets/2026/cubesat-integration.webp";
+import cubesatStructureImage from "./assets/2026/cubesat-structure.webp";
+import sensorBenchImage from "./assets/2026/sensor-bench.webp";
+import sensorBenchCloseImage from "./assets/2026/sensor-bench-close.webp";
+import rocketWorkbenchImage from "./assets/2026/rocket-workbench.webp";
+import rocketStandImage from "./assets/2026/rocket-stand.webp";
+import piCloseupImage from "./assets/2026/pi-closeup.webp";
+import ncrcPosterImage from "./assets/2026/ncrc-h1-poster.webp";
+
+export type DetailStatus = "ACTIVE" | "UPCOMING" | "RESEARCH" | "OPERATIONS";
 
 export type DetailPage = {
   category: "tech" | "general";
@@ -15,184 +25,263 @@ export type DetailPage = {
   body: string[];
   metrics: string[];
   image: string;
+  status?: DetailStatus;
+  tags?: string[];
+  gallery?: { src: string; alt: string; caption?: string }[];
+  video?: { src: string; poster?: string; caption: string };
 };
 
 export const detailPages: DetailPage[] = [
   {
     category: "tech",
-    id: "satellite",
-    label: "Tech",
-    title: "위성 통신 프로토타입",
+    id: "cubesat",
+    label: "위성 시스템",
+    title: "큐브위성 시스템",
     summary:
-      "센서 수집, 전송, 수신 확인까지 한 흐름으로 묶어 실제 데이터 체계를 검증하는 통신 프로젝트입니다.",
+      "Raspberry Pi 5와 ESP32, 환경·자세 센서를 한 기체 안에 통합하고 실제 비행 데이터 수집까지 이어가기 위한 소형 위성 시스템 프로토타입입니다.",
     body: [
-      "SE3C가 가장 중요하게 다루는 기술 축 중 하나는 통신입니다. 목표는 보여주기 위한 시제품이 아니라 센서 값이 실제로 수집되고, 외부로 전달되며, 다시 확인 가능한 형태로 남는 구조를 만드는 것입니다.",
-      "기존 기록에는 예산 부족으로 배터리와 통신 모듈 구성이 자주 제한됐고, 그래서 실험이 부분 성공에 머문 경우가 남아 있습니다. 그 실패를 감추기보다 다음 설계 기준으로 바꾸는 것이 이 트랙의 핵심입니다.",
-      "앞으로는 단순 송수신 확인을 넘어서 전원 설계, 수집 주기, 통신 안정성, 환경 변화 대응까지 포함한 소형 우주공학 수준의 검증 체계로 확장하는 것이 핵심 과제입니다.",
-      "이 프로젝트는 하드웨어 제작, 전자 구성, 데이터 처리, 기록 체계를 동시에 다뤄야 하는 SE3C의 대표적인 통합형 트랙입니다.",
+      "2026년 SE3C 위성 프로젝트는 구조물만 만드는 데서 끝나지 않습니다. 센서 계층, 온보드 컴퓨터, 전원과 배선, 데이터 저장·분석 흐름을 하나의 시스템으로 연결하는 것을 목표로 하고 있습니다.",
+      "6월 하드웨어 통합 활동에서는 ESP32 기반 센서 브레드보드 시험과 Raspberry Pi 5를 탑재한 큐브형 구조물 제작을 진행했습니다. GPS, 온습도, 기압, 조도, 자세 계열 센서를 모듈 단위로 검증하고 실제 기체 안에 배치하는 과정을 반복했습니다.",
+      "소프트웨어는 센서별 모듈을 분리해 수집·출력·기록 흐름을 관리하는 방향으로 설계하고 있습니다. 실제 비행 전에는 mock telemetry를 이용해 데이터 검증과 분석 UI를 먼저 시험합니다.",
+      "다음 단계는 지상 통합 시험을 마친 뒤 웨더벌룬 탑재 비행을 통해 고도·위치·환경 데이터를 실제 조건에서 수집하는 것입니다. 비행은 관련 공역과 관계 기관의 허가 절차를 거쳐 진행할 예정입니다.",
     ],
-    metrics: ["Raspberry Pi 기반", "센서 데이터 수집", "무선 송수신 검증", "기록 기반 반복 실험"],
-    image: satelliteSketchImage,
+    metrics: ["Raspberry Pi 5 OBC", "ESP32 sensor bench", "5+ sensor modules", "Telemetry → analysis pipeline"],
+    image: cubesatIntegrationImage,
+    status: "ACTIVE",
+    tags: ["OBC", "TELEMETRY", "SENSORS", "INTEGRATION"],
+    gallery: [
+      { src: sensorBenchImage, alt: "ESP32 sensor bench", caption: "ESP32 기반 센서 통합 벤치 테스트" },
+      { src: cubesatStructureImage, alt: "CubeSat structure prototype", caption: "Raspberry Pi와 센서 모듈을 배치한 큐브형 구조 프로토타입" },
+      { src: piCloseupImage, alt: "Raspberry Pi close-up", caption: "기체 내부 Raspberry Pi 계열 컴퓨팅 모듈 배치" },
+      { src: sensorBenchCloseImage, alt: "Sensor bench close-up", caption: "센서별 연결 및 데이터 수집 검증" },
+    ],
   },
   {
     category: "tech",
-    id: "propulsion",
-    label: "Tech",
-    title: "추진제와 연소 연구",
+    id: "rocket",
+    label: "로켓공학",
+    title: "로켓공학",
     summary:
-      "KNSB 연료, 노즐 구조, 열 대응, 제작 공정을 함께 검토하며 반복 가능한 실험 조건을 만드는 연구 트랙입니다.",
+      "구조·노즐·추진·회수·현장 운용을 한 프로젝트 안에서 반복 검증하며 실제 제작 경험을 축적하는 로켓 공학 트랙입니다.",
     body: [
-      "3D 프린팅 소재의 내열성, PVC 기반 본체의 안정성, 연료 성형과 보관 방식, 점화 조건 같은 실제 문제가 연구의 중심에 있습니다. 단순한 발사 시도보다 공정 자체를 이해하는 데 더 가깝습니다.",
-      "핵심은 한 번의 성공보다 반복 가능한 조건을 확보하는 것입니다. 재료가 왜 변형됐는지, 점화가 왜 불안정했는지, 연소 결과가 왜 흔들렸는지 기록해야 다음 실험이 더 나아질 수 있습니다.",
-      "SE3C는 결과만 보여주는 방식보다 실패 원인을 남기고 다음 조건을 조정하는 연구형 접근을 택하고 있습니다. 그래서 이 분야는 부품 제작, 재료 실험, 안전 절차, 결과 기록이 하나의 세트로 움직입니다.",
-      "이런 방식은 단기간에 화려한 결과를 만들기보다 장기적으로 기술 축적이 가능한 동아리 구조를 만드는 데 더 적합합니다.",
+      "SE3C의 로켓 프로젝트는 단발성 발사보다 제작 공정과 반복 가능한 실험 조건을 확보하는 데 초점을 둡니다. 구조 설계, 노즐 형상, 재료 특성, 조립과 현장 운용을 각각 기록하고 다음 실험에 반영합니다.",
+      "2026년에는 물로켓 계열 제작과 발사 장비 준비, 구조 부품 가공과 조립 활동을 이어가고 있습니다. 실제 제작 과정에서 필요한 공구, 배관, 체결, 기체 정렬 같은 기초적인 현장 작업도 프로젝트의 일부로 다룹니다.",
+      "기존에 축적한 노즐 모델링과 추진 연구 자료는 향후 3D 프린팅 환경과 연결할 예정입니다. 부품을 직접 설계하고 출력할 수 있게 되면 노즐 목업, 센서 마운트, 테스트 지그와 같은 반복 제작 속도를 높일 수 있습니다.",
+      "안전과 허가가 필요한 활동은 관련 절차를 우선하며, 공개 페이지에는 실제 검증이 끝난 결과와 진행 중인 계획을 구분해 기록합니다.",
     ],
-    metrics: ["KNSB 연료 실험", "노즐 구조 검토", "내열성 문제 분석", "실패 원인 기록"],
-    image: nozzleModelImage,
+    metrics: ["Structure & field work", "Nozzle modeling", "Prototype launch hardware", "Repeatable test records"],
+    image: rocketWorkbenchImage,
+    status: "ACTIVE",
+    tags: ["STRUCTURE", "PROPULSION", "RECOVERY", "TEST"],
+    gallery: [
+      { src: rocketStandImage, alt: "Rocket field hardware", caption: "발사·시험을 위한 현장 장비 준비" },
+      { src: nozzleModelImage, alt: "Nozzle model", caption: "기존 노즐 구조 모델링 자산" },
+    ],
+  },
+  {
+    category: "tech",
+    id: "robotics-ai",
+    label: "로보틱스·AI",
+    title: "NCRC 2026 · 휴머노이드 강화학습",
+    summary:
+      "NAVER CONNECT Robotics Cup 2026 준비 과정에서 NVIDIA Isaac Sim / Isaac Lab 기반 Unitree H1 휴머노이드 보행 정책을 강화학습으로 분석·검증하고 있습니다.",
+    body: [
+      "2026년 7월부터 SE3C는 로보틱스와 강화학습을 새로운 프로젝트 축으로 확장했습니다. Isaac Sim과 Isaac Lab 환경에서 H1 휴머노이드의 locomotion task, reward 구조, checkpoint, play 검증 흐름을 분석하고 있습니다.",
+      "공식 서버 기준선 실험에서는 4,096개 병렬 환경, seed 42, 300 iterations로 학습·checkpoint·환경 export·policy/ONNX export·play 영상 생성 파이프라인을 확인했습니다. 이 짧은 기준선은 안정 보행 성능을 주장하기 위한 결과가 아니라 이후 실험을 비교하기 위한 기준점입니다.",
+      "별도의 개인 NVIDIA/Brev 검증 환경에서는 termination penalty를 변경한 25,000-iteration 장기 실행을 수행해 TensorBoard 시계열, terrain progression, episode length, checkpoint 선택 문제를 분석했습니다. 이 결과는 공식 제출 정책과 분리된 연구·검증 자료로 관리합니다.",
+      "현재는 한 번에 한 변수만 바꾸는 실험 설계, 전체 run 폴더와 event·console·GPU 기록 보존, checkpoint 재검증 등 재현 가능한 ML engineering 절차를 정리하고 있습니다. 아래 영상은 NVIDIA 서버 환경에서 생성한 H1 play 캡처입니다.",
+    ],
+    metrics: ["Isaac Sim / Isaac Lab", "H1 · 4,096 parallel envs", "300-iter official baseline", "25K private validation run"],
+    image: ncrcPosterImage,
+    status: "ACTIVE",
+    tags: ["H1", "PPO", "ISAAC LAB", "REINFORCEMENT LEARNING"],
+    video: {
+      src: "/media/ncrc-h1-play.mp4",
+      poster: ncrcPosterImage,
+      caption: "H1 play capture · NVIDIA server environment · 2026.08",
+    },
   },
   {
     category: "tech",
     id: "software",
-    label: "Software",
-    title: "AI Studio 앱 개발 파이프라인",
+    label: "소프트웨어",
+    title: "텔레메트리와 공학 소프트웨어",
     summary:
-      "AI Studio와 Android Studio를 활용해 실습, 개인 프로젝트, 공용 도구 개발까지 이어가는 소프트웨어 제작 흐름입니다.",
+      "센서 데이터를 읽고 저장하는 코드부터 telemetry 검증, 시각화, 실험 로그 관리까지 하드웨어 프로젝트를 연결하는 소프트웨어 트랙입니다.",
     body: [
-      "AI 코딩 도구는 단순 체험용이 아니라 실제 결과물을 남기기 위한 제작 도구로 다룹니다. 예제 구현을 따라 하는 단계와 자기 주제를 프로젝트로 바꾸는 단계가 분리되어 있다는 점이 중요합니다.",
-      "1단계는 코드 해석과 수정 능력을 확보하는 것입니다. AI가 만든 코드를 읽고 바꾸지 못하면 프로젝트는 자기 것이 되지 않습니다. 2단계는 개인 또는 팀 주제를 정하고, 설계, 구현, 테스트, 발표까지 한 흐름을 경험하는 것입니다.",
-      "공용 메일, 공용 계정, 드라이브, 클래스룸 링크까지 함께 묶어 제작 흐름을 운영 인프라와 연결합니다. 그래서 이 파이프라인은 단순한 코딩 수업보다 동아리 전체의 제작 체계에 가깝습니다.",
-      "SE3C의 소프트웨어 트랙은 앱 하나를 만드는 것보다, 학생이 도구를 활용해 자기 문제를 정의하고 결과물로 정리하는 힘을 기르는 데 더 큰 의미가 있습니다.",
+      "소프트웨어팀은 단순 앱 제작보다 실제 하드웨어가 만들어내는 데이터를 안정적으로 읽고 해석하는 역할에 집중하고 있습니다. 센서별 모듈을 나누고 공통 설정과 출력 계층을 분리해 여러 팀원이 동시에 작업할 수 있는 구조를 설계했습니다.",
+      "위성 프로젝트에서는 GPS, DHT11, BMP280, MPU6050, BH1750 등 센서 계층과 LED·buzzer 출력 계층을 분리하는 방향을 사용합니다. 실제 비행 전에 mock telemetry를 이용해 파일 검증, 상태 판정, 그래프와 이상 감지 UI를 시험할 수 있습니다.",
+      "NCRC 프로젝트에서는 TensorBoard event, console log, checkpoint, env 설정과 hash를 함께 보존하는 실험 기록 체계까지 다룹니다. 하드웨어와 AI 프로젝트가 달라도 데이터와 재현성을 관리하는 공통 소프트웨어 기반을 만드는 것이 목표입니다.",
+      "공개 가능한 프로젝트와 기술 문서는 GitHub를 통해 점진적으로 정리할 예정입니다.",
     ],
-    metrics: ["AI Studio", "Android Studio", "개인 프로젝트 확장", "공용 운영 도구 연계"],
+    metrics: ["Python module structure", "Telemetry validation", "Data visualization", "Experiment reproducibility"],
     image: satelliteMonitorImage,
+    status: "ACTIVE",
+    tags: ["PYTHON", "DATA", "WEB", "LOGGING"],
+  },
+  {
+    category: "tech",
+    id: "fabrication",
+    label: "디지털 제작",
+    title: "3D 프린팅과 신속 시제품 제작",
+    summary:
+      "3D 프린터 도입 이후 로켓·위성 프로젝트용 구조 부품, 센서 마운트와 실험 지그를 직접 설계·출력하기 위한 제작 인프라를 준비하고 있습니다.",
+    body: [
+      "SE3C는 3D 프린터를 단순 체험 장비가 아니라 프로젝트 제작 속도를 높이는 공학 도구로 도입할 계획입니다. CAD 설계부터 출력 방향, 재료 특성, 후가공, 체결과 실제 사용 조건까지 한 흐름으로 다루게 됩니다.",
+      "도입 전 단계에서는 PLA 계열 재료의 MSDS와 교육기관 3D 프린팅 안전 가이드, 학교 안전관리 자료 등을 검토해 운영 기준을 준비했습니다. 장비가 들어온 뒤에는 안전한 출력·환기·보관 절차를 먼저 확립할 예정입니다.",
+      "첫 활용 후보는 CubeSat 센서 마운트와 내부 브래킷, 로켓 구조 목업, 노즐 형상 검증용 모델, 실험용 고정 지그입니다. 기존에 외부 제작이나 수작업에 의존하던 부품을 빠르게 반복 제작하는 것이 핵심입니다.",
+      "실제 출력물과 프로젝트 결과는 장비 도입 후 이 페이지에 순차적으로 업데이트합니다.",
+    ],
+    metrics: ["CAD → print workflow", "Safety guideline reviewed", "Sensor mounts & brackets", "Test jigs / structural mockups"],
+    image: nozzleModelImage,
+    status: "UPCOMING",
+    tags: ["CAD", "FDM", "RAPID PROTOTYPING", "SAFETY"],
+  },
+  {
+    category: "tech",
+    id: "high-altitude-flight",
+    label: "비행시험",
+    title: "고고도 웨더벌룬 비행시험",
+    summary:
+      "개발 중인 위성 시스템 프로토타입을 웨더벌룬에 탑재하고 실제 고고도 환경에서 telemetry와 시스템 동작을 검증하는 비행 시험을 준비하고 있습니다.",
+    body: [
+      "지상에서 정상 동작하는 시스템이 실제 비행 환경에서도 같은 방식으로 동작하는지 확인하는 것이 이 프로젝트의 목적입니다. 위성 시스템 프로토타입을 웨더벌룬 payload로 구성해 고도, 위치, 기압, 온도, 자세와 시스템 상태를 기록할 계획입니다.",
+      "비행 전에는 기체 질량과 고정 구조, 전원 지속시간, 데이터 저장, 통신 또는 회수 방식, 착륙 후 데이터 확보 절차를 단계적으로 검증합니다. mock telemetry 기반으로 만든 분석 흐름도 실제 비행 데이터에 연결할 예정입니다.",
+      "공역을 사용하는 실제 비행은 임의로 진행하지 않습니다. 성남공항 등 관련 기관과 필요한 공역·비행 허가 절차를 확인하고 승인을 받은 범위 안에서 진행할 예정입니다.",
+      "비행 일정과 허가 상태가 확정되면 이 페이지에서 실제 준비 기록, flight log, telemetry 결과를 공개 가능한 범위에서 업데이트합니다.",
+    ],
+    metrics: ["Weather-balloon payload", "Real telemetry collection", "Recovery & data retrieval", "Permission-first flight plan"],
+    image: cubesatStructureImage,
+    status: "UPCOMING",
+    tags: ["WEATHER BALLOON", "FLIGHT TEST", "TELEMETRY", "RECOVERY"],
   },
   {
     category: "general",
     id: "team",
-    label: "Team",
-    title: "4개 파트 운영 구조",
+    label: "동아리 소개",
+    title: "프로젝트 중심의 공학 팀",
     summary:
-      "운영, 기록, 전자·통신, 기구·하드웨어, 소프트웨어가 분리되지 않고 하나의 프로젝트 체계로 연결되는 팀 구조입니다.",
+      "기구·회로·소프트웨어·운영을 프로젝트 단위로 연결하고, 각 파트의 결과를 다음 실험으로 넘기는 협업 구조를 운영합니다.",
     body: [
-      "SE3C는 단순 취미 모임보다 프로젝트 조직에 가깝게 움직입니다. 일정, 기록, 예산, 외부 활동을 다루는 운영 축과 기술 실험을 수행하는 제작 축이 함께 연결됩니다.",
-      "전자·통신 파트는 센서와 데이터 전송 구조를, 기구·하드웨어 파트는 본체와 부품 제작, 재료 검토, 조립 공정을 담당합니다. 소프트웨어 파트는 AI 도구 기반 개발, 앱 제작, 운영 보조 도구, 자료 정리를 맡습니다.",
-      "이 구조의 장점은 각 파트가 독립적으로 움직이면서도 결과가 공용 기록과 활동 로그로 다시 합쳐진다는 점입니다. 그래서 조직 운영과 기술 실험이 따로 떨어지지 않고 다음 활동으로 이어집니다.",
-      "결국 SE3C의 팀 구조는 역할 분담이 목적이 아니라, 여러 실험을 하나의 축적 가능한 프로젝트 시스템으로 만드는 장치입니다.",
+      "SE3C는 역할만 나눈 조직보다 실제 프로젝트가 끝까지 이어지는 구조를 지향합니다. 기구·몸체, 회로·센서, 소프트웨어, 운영·기록이 서로 다른 작업을 맡지만 하나의 검증 결과로 다시 합쳐집니다.",
+      "2026년에는 CubeSat, Rocket, NCRC Robotics & AI가 동시에 진행되면서 프로젝트별 필요한 역할이 달라졌습니다. 팀 편성도 고정된 명칭보다 실제 과제와 책임에 맞춰 유연하게 운영합니다.",
+      "지원·면접·인원관리 자료처럼 개인정보가 포함된 내부 운영 문서는 공개 저장소와 분리합니다. 홈페이지에는 공개 동의를 받은 정보 또는 식별정보를 제거한 기록만 사용합니다.",
+      "각 프로젝트의 기록을 남겨 다음 기수가 그대로 이어받을 수 있게 하는 것이 장기적인 목표입니다.",
     ],
-    metrics: ["4개 운영 축", "기록 기반 협업", "운영+기술 통합", "결과물 축적 구조"],
+    metrics: ["Project-based roles", "Hardware + software integration", "Activity logs", "Public/private data separation"],
     image: expoGroupImage,
+    status: "OPERATIONS",
   },
   {
     category: "general",
     id: "roadmap",
-    label: "Roadmap",
-    title: "2026 기술 로드맵",
+    label: "로드맵",
+    title: "2026 프로젝트 로드맵",
     summary:
-      "2025년의 시행착오를 바탕으로 2026년에는 통신, 추진, 소프트웨어, 기록 체계를 검증 가능한 프로젝트로 정리합니다.",
+      "팀 구성에서 CubeSat 하드웨어 통합, NCRC 강화학습까지 진행했고 다음 단계로 3D 제작 환경과 고고도 비행 시험을 준비합니다.",
     body: [
-      "2025년에 시도한 통신, 추진체, AI 앱 제작, 체험 프로그램 운영은 2026년 계획의 출발점입니다. 올해 로드맵은 무엇을 새로 시작할지보다, 무엇을 더 정확하게 검증할지를 중심에 둡니다.",
-      "상반기에는 데이터 수집과 통신 구조 안정화, 활동 자료 정리, 외부 공모 탐색, 예산 확보가 우선입니다. 중반기에는 부품 제작과 반복 실험, 소프트웨어 결과물 제작, 발표 자료 정리가 병행됩니다.",
-      "하반기에는 전시용 성과보다 재현 가능한 기록과 검증 자료를 남기는 것이 중요합니다. 다음 기수가 이어받을 수 있는 형태여야 동아리의 기술이 누적되기 때문입니다.",
-      "이 로드맵은 단순 일정표가 아니라, SE3C가 어떤 기준으로 프로젝트를 선택하고 평가하는지 보여주는 운영 원칙에 가깝습니다.",
+      "3월에는 신입부원 모집과 팀 구성을 진행했고, 4~5월에는 CubeSat OBC·센서·전원·소프트웨어 구조와 telemetry 흐름을 설계했습니다.",
+      "6월에는 ESP32 센서 벤치와 Raspberry Pi 기반 큐브 구조를 실제로 제작·통합했고 로켓 제작과 현장 장비 준비도 병행했습니다.",
+      "7월부터 NCRC 2026 준비를 시작해 8월에는 H1 강화학습 baseline, 장기 검증 실행, TensorBoard와 checkpoint 분석, 실험 증거 보존 절차를 정리했습니다.",
+      "다음 단계는 3D 프린터 기반 rapid prototyping을 실제 프로젝트에 연결하고, 관련 허가 절차를 거친 웨더벌룬 고고도 비행으로 CubeSat-format payload를 검증하는 것입니다.",
     ],
-    metrics: ["Q2 데이터/통신", "Q3 제작/실험", "Q4 발표/정리", "기록 중심 축적"],
+    metrics: ["MAR · team formation", "JUN · hardware integration", "AUG · humanoid RL", "NEXT · fabrication & flight"],
     image: expoInteriorImage,
+    status: "ACTIVE",
   },
   {
     category: "general",
     id: "credibility",
-    label: "Credibility",
-    title: "대외 실적과 신뢰 근거",
+    label: "활동 기록",
+    title: "만들고, 시험하고, 기록합니다.",
     summary:
-      "SE3C가 외부에 보여줄 수 있는 활동 흔적과 실적 자산을 한곳에 모았습니다.",
+      "완성품만 보여주기보다 설계, 제작, 실패, 데이터와 다음 결정을 함께 남겨 실제로 진행한 공학 활동을 검증 가능한 기록으로 축적합니다.",
     body: [
-      "SE3C의 활동은 교실 안에서 끝나지 않습니다. 체험 부스, 발표 자료, 외부 행사 준비 과정처럼 동아리가 밖으로 나가 사람들과 만날 수 있는 기록을 함께 쌓아가고 있습니다.",
-      "SE3C가 어떤 방식으로 활동을 보여주고, 어떤 자료를 통해 신뢰를 만들 수 있는지를 실제 준비 흔적과 결과물 중심으로 확인할 수 있습니다.",
-      "기술 프로젝트는 완성품만큼 과정도 중요합니다. 시도한 내용, 공유한 자료, 발표와 홍보를 위해 준비한 자산이 쌓일수록 SE3C가 지속적으로 움직이는 팀이라는 점이 분명해집니다.",
-      "앞으로의 대외 활동은 이 기록을 바탕으로 이어집니다. SE3C가 무엇을 해왔고, 다음에 무엇을 보여줄 수 있는지를 한눈에 확인하는 공간입니다.",
+      "SE3C의 공개 기록은 '무엇을 하고 싶다'보다 실제로 무엇을 만들고 어떤 데이터를 남겼는지 보여주는 방향으로 정리합니다.",
+      "CubeSat 프로젝트에는 센서 테스트와 기체 통합 사진, NCRC에는 학습 산출물과 play 영상, 로켓에는 제작·시험 준비 기록이 있습니다. 진행 예정 프로젝트는 ACTIVE 결과와 섞지 않고 UPCOMING으로 구분합니다.",
+      "AI 실험에서는 checkpoint 하나만 보존하지 않고 TensorBoard event, console, 설정, 코드 hash와 전체 run 구조를 함께 남기는 방식을 도입하고 있습니다. 이 원칙은 앞으로 다른 프로젝트의 실험 로그에도 확장할 수 있습니다.",
+      "공개 가능한 기술 자료와 소스 코드는 GitHub 조직을 통해 정리합니다.",
     ],
-    metrics: ["체험 부스 운영 가능성", "발표/홍보 자산", "대외 활동 기록", "외부 기준 신뢰 확보"],
+    metrics: ["Photo & build evidence", "Experiment artifacts", "Status transparency", "GitHub-based documentation"],
     image: expoBoothImage,
+    status: "OPERATIONS",
   },
   {
     category: "general",
     id: "operations",
-    label: "Operations",
-    title: "운영 체계와 실행 구조",
+    label: "운영",
+    title: "프로젝트를 지속시키는 운영",
     summary:
-      "예산, 활동 기록, 공용 링크, 인원 배치를 하나의 흐름으로 묶어 SE3C의 프로젝트가 실제로 굴러가게 만드는 운영 구조입니다.",
+      "예산·안전·기록·자료 관리·역할 배치를 기술 프로젝트와 연결해 동아리 활동을 반복 가능한 시스템으로 운영합니다.",
     body: [
-      "SE3C의 운영은 활동을 한 번 하고 끝내지 않는 데 초점이 있습니다. 예산 확보, 활동 로그, 공용 자료, 역할 배치가 서로 연결되면서 기술 프로젝트를 지속 가능한 흐름으로 만듭니다.",
-      "예산은 실험 재료와 부스 운영을 가능하게 하고, 활동 기록은 실패와 개선점을 다음 실험으로 이어줍니다. 공용 링크와 계정은 자료가 흩어지지 않도록 잡아주며, 인원 배치는 각 파트의 책임을 분명하게 만듭니다.",
-      "이 구조가 있어야 통신, 추진, 소프트웨어 같은 기술 트랙이 한 번의 시도로 끝나지 않고 반복 가능한 프로젝트로 이어질 수 있습니다. 운영은 결과물을 뒤에서 받쳐주는 실제 기반입니다.",
-      "아래의 세부 항목들은 SE3C가 무엇을 준비하고, 어떻게 기록하며, 누가 어떤 역할로 움직이는지 확인할 수 있는 운영의 핵심 축입니다.",
+      "프로젝트가 늘어날수록 부품 구매, 안전 검토, 실험 기록, 파일 관리와 일정 조정이 기술 개발만큼 중요해집니다. SE3C는 이 운영 계층을 프로젝트 일부로 다룹니다.",
+      "3D 프린터 도입 전 안전 가이드와 소재 자료를 검토하고, NCRC 실험 전후에는 전체 로그와 산출물 export 규칙을 정리하는 것처럼 프로젝트 성격에 맞는 운영 절차를 따로 구축하고 있습니다.",
+      "개인정보, 계정 정보, 비공개 자료는 public Git 저장소와 분리하며 홈페이지에는 공개 가능한 결과만 배치합니다.",
+      "이 운영 구조는 한 번의 활동을 다음 활동의 출발점으로 바꾸는 기반입니다.",
     ],
-    metrics: ["예산 확보", "활동 기록", "공용 자료 관리", "역할 기반 운영"],
+    metrics: ["Safety & permission", "Artifact management", "Public/private separation", "Reproducible workflows"],
     image: expoExperienceImage,
+    status: "OPERATIONS",
   },
   {
     category: "general",
     id: "budget",
-    label: "Operations",
-    title: "예산 확보와 운영 구조",
-    summary:
-      "교내 예산, 외부 공모, 운영 일정, 프로젝트별 자금 분배를 실제 활동 흐름에 맞춰 정리합니다.",
+    label: "운영",
+    title: "Budget & Procurement",
+    summary: "프로젝트에 필요한 장비와 부품을 우선순위에 따라 도입하고, 안전·운영 조건까지 함께 검토합니다.",
     body: [
-      "예산 관리는 교내 지원만 보는 데서 끝나지 않습니다. 지역 청소년 센터, 과학관, 메이커 행사, 외부 공모까지 폭넓은 자금 경로를 함께 검토합니다.",
-      "핵심은 프로젝트마다 필요한 돈의 성격이 다르다는 점입니다. 재료비와 부품비가 필요한 실험, 부스 운영과 홍보가 필요한 행사, 앱 제작과 자료 정리가 필요한 소프트웨어 트랙은 서로 다른 방식으로 예산을 확보해야 합니다.",
-      "운영 계획은 이런 차이를 구분하고, 언제 무엇을 준비해야 하는지, 어떤 경로가 현실적인지, 일정과 어떻게 연결되는지를 보여줍니다.",
-      "대외 활동이 SE3C의 성과를 보여주는 장면이라면, 예산 계획은 그 성과를 준비하고 이어 가게 만드는 기반입니다.",
+      "예산은 단순 구매 목록이 아니라 프로젝트 순서를 결정하는 요소입니다. 센서, 컴퓨팅 모듈, 구조 재료, 제작 장비와 현장 운용 품목을 프로젝트 단계에 맞춰 관리합니다.",
+      "3D 프린터처럼 운영 기준이 필요한 장비는 구매 이전에 안전 가이드와 재료 정보를 함께 검토합니다.",
+      "구체적인 내부 예산표와 계정 정보는 공개 페이지에 올리지 않고, 외부에 필요한 경우 공개 가능한 범위의 요약만 제공합니다.",
     ],
-    metrics: ["교내 예산", "외부 공모 조사", "프로젝트별 예산 분리", "운영 일정 연동"],
+    metrics: ["Project priority", "Equipment review", "Safety before operation", "Internal details kept private"],
     image: expoExperienceImage,
+    status: "OPERATIONS",
   },
   {
     category: "general",
     id: "records",
-    label: "Operations",
-    title: "활동 기록과 실험 로그",
-    summary:
-      "목표, 준비물, 결과, 개선점, 다음 계획까지 남길 수 있는 기록 템플릿이 운영의 중심에 있습니다.",
+    label: "운영",
+    title: "Activity & Experiment Records",
+    summary: "목표, 설정, 결과, 실패 원인과 다음 변경점을 함께 남겨 반복 가능한 공학 활동을 만듭니다.",
     body: [
-      "활동 기록의 장점은 단순 후기 형식이 아니라 실험과 운영을 반복 개선할 수 있는 구조를 갖췄다는 점입니다. 날짜, 장소, 참여자, 진행 내용, 결과, 실패 원인, 다음 준비물까지 한 번에 남길 수 있습니다.",
-      "이 방식은 기술 실험에 특히 중요합니다. 같은 프로젝트를 다시 시도할 때 이전 실패를 기억에 의존하지 않고 기록으로 이어받을 수 있기 때문입니다.",
-      "통신, 추진, 앱 개발처럼 실패 비용이 큰 주제일수록 기록은 결과물만큼 중요합니다. SE3C의 강점은 이를 감각이 아니라 활동 구조로 정리해 간다는 점입니다.",
-      "결국 기록은 과거를 저장하는 일이 아니라 다음 실험의 조건을 만드는 일입니다. 그 기준이 활동 로그 안에 쌓입니다.",
+      "활동 기록은 사진 모음보다 다음 실험을 재현할 수 있는 정보가 중요합니다. 날짜, 환경, 사용 부품, 설정, 결과와 다음 변경점을 함께 남깁니다.",
+      "NCRC에서는 event, checkpoint, console, GPU 기록, 설정과 hash를 묶는 방식으로 실험 보존 수준을 높였습니다.",
+      "CubeSat과 로켓 프로젝트도 제작 버전과 시험 결과를 연결해 장기적으로 engineering log 형태로 공개할 계획입니다.",
     ],
-    metrics: ["활동 템플릿", "실패 원인 기록", "다음 실험 연계", "누적형 운영"],
+    metrics: ["Configuration", "Results", "Failure analysis", "Next-change rule"],
     image: expoInteriorImage,
+    status: "OPERATIONS",
   },
   {
     category: "general",
     id: "links",
-    label: "Operations",
-    title: "공용 링크와 운영 도구",
-    summary:
-      "드라이브, 클래스룸, 홍보 자료, 공용 메일, AI 도구 링크를 한곳에 묶어 협업의 시작점을 통일합니다.",
+    label: "운영",
+    title: "Open Engineering Links",
+    summary: "공개 가능한 기술 자료와 소스 코드를 GitHub 중심으로 연결하고 내부 운영 자료는 별도 공간에서 관리합니다.",
     body: [
-      "공용 링크에는 드라이브, 클래스룸, 홍보 자료, AI Studio, 외부 참고 자료까지 운영에 필요한 접점이 모여 있습니다. 이는 편의 기능이 아니라 협업 구조의 시작점입니다.",
-      "공용 메일과 계정, 링크 허브가 존재하면 자료가 개인 메신저나 개인 계정에 흩어지지 않고 팀 자산으로 남습니다. 동아리 활동이 커질수록 이 차이는 매우 중요해집니다.",
-      "SE3C는 기술 프로젝트뿐 아니라 운영 인프라 자체도 꾸준히 다듬고 있습니다. 좋은 기록과 좋은 링크 구조는 작은 조직을 실제 운영 가능한 팀으로 바꾸는 핵심 요소입니다.",
-      "협업이 자주 끊기는 팀일수록 자료가 흩어집니다. SE3C는 그 반대 방향으로 가고 있습니다.",
+      "외부에 공개해도 되는 소스 코드와 기술 문서는 SE3C GitHub 조직에서 관리하는 방향으로 정리합니다.",
+      "공용 계정, 내부 문서, 지원자 자료, 비공개 운영 링크는 공개 사이트와 분리합니다.",
+      "홈페이지는 외부에서 SE3C가 무엇을 만들고 있는지 빠르게 이해할 수 있는 공개 진입점 역할을 합니다.",
     ],
-    metrics: ["Drive / Classroom", "공용 메일", "홍보 자료 허브", "협업 시작점 통일"],
-    image: satelliteMonitorImage,
+    metrics: ["github.com/SE3C", "Public docs", "Project source links", "Private ops separated"],
+    image: satelliteSketchImage,
+    status: "OPERATIONS",
   },
   {
     category: "general",
     id: "members",
-    label: "Operations",
-    title: "인원 구성과 역할 분배",
-    summary:
-      "학생을 단순 참여자가 아니라 역할과 책임이 있는 프로젝트 구성원으로 배치하는 운영 관점이 반영돼 있습니다.",
+    label: "운영",
+    title: "Members & Roles",
+    summary: "구성원 정보는 공개 동의와 블라인드 원칙을 적용하고, 홈페이지에서는 프로젝트 역할 중심으로 소개합니다.",
     body: [
-      "인원 구성은 단순 명단보다 운영표에 가깝습니다. 누가 어떤 영역에 배치되는지에 따라 기록, 기술, 발표, 외부 활동의 흐름이 달라지기 때문입니다.",
-      "학생 개개인이 어떤 파트와 주제에 연결되는지 추적할 수 있는 기반도 함께 마련되어 있습니다. 이는 기술 동아리에서 자주 빠지는 부분입니다.",
-      "역할 배치가 명확할수록 활동 기록과 결과물 책임이 선명해지고, 다음 기수 인수인계도 쉬워집니다. 단순 명단을 넘어 조직 설계에 가까운 구성입니다.",
-      "SE3C의 인원 구조는 사람을 채우는 방식이 아니라 프로젝트를 굴릴 수 있게 만드는 방식으로 짜여 있습니다.",
+      "SE3C 내부에는 지원·면접·인원관리 자료가 있지만 이 자료를 그대로 public repo에 올리지 않습니다.",
+      "개별 구성원을 공개할 때는 본인 동의를 확인하고, 동의하지 않았거나 확인되지 않은 정보는 이름·학번·연락처·얼굴 등 식별 가능한 요소를 제거합니다.",
+      "홈페이지의 팀 소개는 개인 프로필보다 프로젝트에서 어떤 역할이 연결되는지를 중심으로 구성합니다.",
     ],
-    metrics: ["역할 기반 배치", "파트 운영 연계", "기수 인수인계", "책임 범위 명확화"],
+    metrics: ["Consent first", "Blind when needed", "Role-based public profile", "No raw applicant files"],
     image: expoGroupImage,
+    status: "OPERATIONS",
   },
 ];
 

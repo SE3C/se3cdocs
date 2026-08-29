@@ -1,70 +1,40 @@
-# SE3C Docs
+# SE3C Public Website
 
-SE3C Docs는 보인고 우주공학 동아리 SE3C의 공개 홈페이지입니다.
+SE3C (Space Exploration Engineering Experimental Club) 공개 홈페이지입니다.
 
-- 공개 사이트: `se3c.mcv.kr`
-- 프레임워크: React + Vite
-- 배포 대상: GitHub Pages
+## 2026 update
 
-## 보안 정책
+- CubeSat system prototype / telemetry
+- Rocket engineering
+- NCRC 2026 · Humanoid reinforcement learning
+- Software & engineering data workflow
+- 3D printing / rapid prototyping (upcoming)
+- High-altitude weather-balloon flight test (upcoming, permission-first)
 
-이 저장소와 GitHub Pages 배포물에는 내부 문서 원본, 계정 비밀번호, Google Apps Script URL, API 키 같은 민감 정보를 넣지 않습니다.
-
-브라우저에 배포되는 React/Vite 앱의 환경 변수와 소스 코드는 최종 JavaScript 번들에서 확인될 수 있습니다. 따라서 비밀번호 비교, 내부 문서 조회, Google Docs/GAS 연동 같은 보호 기능은 공개 프론트엔드에서 구현하지 않습니다.
-
-내부 자료는 공개 사이트에 배포하지 않고, 필요한 사람은 원본 Google Docs 권한으로 직접 접근합니다.
-
-## 사이트 구조
-
-- `/`
-- `/tech`
-- `/tech/satellite`
-- `/tech/propulsion`
-- `/tech/software`
-- `/team`
-- `/roadmap`
-- `/credibility`
-- `/operations`
-- `/budget`
-- `/records`
-- `/links`
-- `/members`
-
-상세 페이지 콘텐츠는 `src/siteDetails.ts`의 공개용 정적 데이터로 관리합니다.
-
-## 주요 파일
-
-- `src/main.tsx`: 진입점, GitHub Pages 404 fallback 복원, 공개 라우팅
-- `src/LandingPage.tsx`: 홈 화면
-- `src/TechPage.tsx`: 기술 허브
-- `src/MainDetailPage.tsx`: 상세 페이지 공통 렌더러
-- `src/siteDetails.ts`: 공개 상세 페이지 콘텐츠
-- `src/PublicHeader.tsx`: 공개 사이트 헤더
-- `src/PublicFooter.tsx`: 공개 사이트 footer
-- `src/useHideChromeOnScroll.ts`: 스크롤 방향 기반 헤더 표시 hook
-- `public/data.json`: 공개 배포용 빈 호환 파일. 내부 문서 저장 금지
-
-## 개발
+## Local development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Windows에서는 `run.bat`을 사용할 수 있습니다.
-
-```bat
-run.bat
-```
-
-## 빌드
+## Production check
 
 ```bash
 npm run build
+npm run lint
 ```
 
-## 배포
+`main` 브랜치에 push하면 `.github/workflows/deploy.yml`을 통해 GitHub Pages로 배포됩니다.
 
-GitHub Pages 배포는 `.github/workflows/deploy.yml`에서 처리합니다.
+## Public-data rule
 
-배포 워크플로우는 내부 문서 데이터를 가져오지 않습니다. 공개 사이트에 필요한 콘텐츠만 저장소의 정적 파일에서 빌드합니다.
+지원자·부원 개인정보, 계정 정보, 비공개 링크와 내부 원본 문서는 이 공개 저장소에 업로드하지 않습니다. 인물 정보·사진은 공개 동의 또는 필요한 블라인드 처리를 거친 자료만 사용합니다.
+
+## 2026-08 SpaceX-inspired redesign
+
+- 공식 슬로건 **“상상하던 걸, 실제 프로젝트로 만들다.”** 적용
+- 한국어 중심 내비게이션과 콘텐츠 구조
+- 카드형 랜딩 페이지 대신 full-viewport 프로젝트 섹션 구성
+- CubeSat / Rocket / NCRC / 3D Printing / High-Altitude Flight 업데이트
+- NCRC H1 play 영상 포함
