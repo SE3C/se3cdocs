@@ -28,7 +28,7 @@ export default function PublicHeader({ isChromeHidden = false }: PublicHeaderPro
   return (
     <header
       className="fixed inset-x-0 top-0 z-50 transition-all duration-500"
-      style={{ opacity: isChromeHidden ? 0 : 1, transform: isChromeHidden ? "translateY(-76px)" : "translateY(0)", pointerEvents: isChromeHidden ? "none" : "auto" }}
+      style={{ top: isChromeHidden ? "-76px" : "0", opacity: isChromeHidden ? 0 : 1, pointerEvents: isChromeHidden ? "none" : "auto" }}
     >
       <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/80 via-black/35 to-transparent" />
       <div className="relative mx-auto flex h-[72px] w-full max-w-[1500px] items-center justify-between px-5 sm:px-7 lg:px-10">
