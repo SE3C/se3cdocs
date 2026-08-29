@@ -9,7 +9,6 @@ permissions:
   pages: write
   id-token: write
 
-# 동시 배포 방지
 concurrency:
   group: "pages"
   cancel-in-progress: false

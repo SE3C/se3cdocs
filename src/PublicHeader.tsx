@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Github, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoImage from "./assets/se3c_logo_white.png";
@@ -56,12 +57,17 @@ export default function PublicHeader({ isChromeHidden = false }: PublicHeaderPro
         </button>
       </div>
 
-      <div
-        className={`fixed inset-0 z-10 bg-black transition-all duration-300 lg:hidden ${isMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
-        aria-hidden={!isMenuOpen}
-        inert={!isMenuOpen ? true : undefined}
-      >
-        <div className="flex min-h-screen flex-col px-6 pb-10 pt-28">
+      {isMenuOpen && createPortal(
+        <div className="mobile-menu" role="dialog" aria-label="사이트 메뉴">
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen(false)}
+            className="mobile-menu-close"
+            aria-label="메뉴 닫기"
+          >
+            <X size={24} />
+          </button>
+          <div className="flex min-h-screen flex-col px-6 pb-10 pt-28">
           <div className="border-t border-white/20">
             {navLinks.map((link) => (
               <Link key={link.to} to={link.to} onClick={() => setIsMenuOpen(false)} className="flex items-center justify-between border-b border-white/20 py-5 text-xl font-medium text-white">
@@ -73,8 +79,10 @@ export default function PublicHeader({ isChromeHidden = false }: PublicHeaderPro
             </a>
           </div>
           <div className="mt-auto pt-12 text-xs leading-6 text-white/45">SE3C · 우주탐사공학실험동아리<br />2026 Engineering Portfolio</div>
-        </div>
-      </div>
+          </div>
+        </div>,
+        document.body,
+      )}
     </header>
   );
 }

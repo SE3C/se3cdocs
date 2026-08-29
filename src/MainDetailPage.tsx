@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { ArrowLeft, ArrowRight, Github } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { detailPages, getDetailPath } from "./siteDetails";
 import PublicHeader from "./PublicHeader";
 import PublicFooter from "./PublicFooter";
 import useHideChromeOnScroll from "./useHideChromeOnScroll";
+import NotFoundPage from "./NotFoundPage";
 
 export default function MainDetailPage() {
   const params = useParams();
@@ -19,18 +20,7 @@ export default function MainDetailPage() {
   }, [location.pathname]);
 
   if (!detail) {
-    return (
-      <div className="page-enter min-h-screen bg-[#050505] text-slate-100">
-        <PublicHeader />
-        <div className="px-3 pb-16 pt-3 sm:px-4 md:px-6">
-          <div className="rounded-2xl border border-slate-800 bg-slate-950/60 p-6 sm:p-8">
-            <p className="section-kicker">404</p>
-            <h1 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">페이지를 찾을 수 없습니다.</h1>
-            <Link to="/" className="mt-6 inline-flex items-center gap-2 rounded-full border border-slate-700 px-5 py-3 text-sm text-slate-200"><ArrowLeft size={15} /> 홈으로 돌아가기</Link>
-          </div>
-        </div>
-      </div>
-    );
+    return <NotFoundPage />;
   }
 
   return (
