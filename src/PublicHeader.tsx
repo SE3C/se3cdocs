@@ -1,18 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Github, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoImage from "./assets/se3c_logo_white.png";
 
 const navLinks = [
-  { label: "프로젝트", to: "/tech" },
-  { label: "활동 기록", to: "/credibility" },
-  { label: "동아리 소개", to: "/team" },
+  { label: "PROJECTS", to: "/tech" },
+  { label: "ENGINEERING LOG", to: "/credibility" },
+  { label: "ABOUT SE3C", to: "/team" },
 ];
 
 type PublicHeaderProps = { isChromeHidden?: boolean };
 
 export default function PublicHeader({ isChromeHidden = false }: PublicHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMenuOpen]);
 
   return (
     <header
@@ -45,7 +56,11 @@ export default function PublicHeader({ isChromeHidden = false }: PublicHeaderPro
         </button>
       </div>
 
-      <div className={`fixed inset-0 z-10 bg-black transition-all duration-300 lg:hidden ${isMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}>
+      <div
+        className={`fixed inset-0 z-10 bg-black transition-all duration-300 lg:hidden ${isMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
+        aria-hidden={!isMenuOpen}
+        inert={!isMenuOpen ? true : undefined}
+      >
         <div className="flex min-h-screen flex-col px-6 pb-10 pt-28">
           <div className="border-t border-white/20">
             {navLinks.map((link) => (

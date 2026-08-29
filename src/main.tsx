@@ -1,10 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import './index.css'
-import LandingPage from './LandingPage.tsx'
-import MainDetailPage from './MainDetailPage.tsx'
-import TechPage from './TechPage.tsx'
+import App from './App.tsx'
 
 const restoreRedirectedPath = () => {
   const { pathname, search, hash } = window.location
@@ -25,24 +22,8 @@ const restoreRedirectedPath = () => {
 
 restoreRedirectedPath()
 
-function PublicRoutes() {
-  const location = useLocation()
-
-  return (
-    <Routes location={location} key={location.pathname}>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/tech" element={<TechPage />} />
-      <Route path="/tech/:id" element={<MainDetailPage />} />
-      <Route path="/:id" element={<MainDetailPage />} />
-      <Route path="*" element={<LandingPage />} />
-    </Routes>
-  )
-}
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <PublicRoutes />
-    </BrowserRouter>
+    <App />
   </StrictMode>,
 )
