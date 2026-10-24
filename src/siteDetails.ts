@@ -1,4 +1,3 @@
-import satelliteMonitorImage from "./assets/satellite-monitor.jpeg";
 import satelliteInteriorImage from "./assets/drive/satellite-interior.jpeg";
 import statusLedBuzzerCode1Image from "./assets/2026/status-led-buzzer-code-review-1.jpg";
 import statusLedBuzzerCode2Image from "./assets/2026/status-led-buzzer-code-review-2.jpg";
