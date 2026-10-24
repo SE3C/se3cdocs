@@ -237,7 +237,7 @@ export const detailPages: DetailPage[] = [
     label: "활동 기록",
     title: "만들고, 시험하고, 기록합니다.",
     summary:
-      "완성품만 보여주기보다 설계, 제작, 실패, 데이터와 다음 결정을 함께 남겨 실제로 진행한 공학 활동을 검증 가능한 기록으로 축적합니다.",
+      "설계와 제작, 실험 데이터 및 검증 결과를 연결해 실제 공학 활동의 성과를 확인 가능한 기록으로 축적합니다.",
     body: [
       "SE3C의 공개 기록은 '무엇을 하고 싶다'보다 실제로 무엇을 만들고 어떤 데이터를 남겼는지 보여주는 방향으로 정리합니다.",
       "CubeSat 프로젝트에는 센서 테스트와 기체 통합 사진, NCRC에는 학습 산출물과 play 영상, 로켓에는 제작·시험 준비 기록이 있습니다. 진행 예정 프로젝트는 ACTIVE 결과와 섞지 않고 UPCOMING으로 구분합니다.",
@@ -285,13 +285,13 @@ export const detailPages: DetailPage[] = [
     id: "records",
     label: "운영",
     title: "Activity & Experiment Records",
-    summary: "목표, 설정, 결과, 실패 원인과 다음 변경점을 함께 남겨 반복 가능한 공학 활동을 만듭니다.",
+    summary: "목표, 실험 설정, 측정 결과와 후속 성과를 함께 남겨 재현 가능한 공학 활동을 만듭니다.",
     body: [
       "활동 기록은 사진 모음보다 다음 실험을 재현할 수 있는 정보가 중요합니다. 날짜, 환경, 사용 부품, 설정, 결과와 다음 변경점을 함께 남깁니다.",
       "NCRC에서는 event, checkpoint, console, GPU 기록, 설정과 hash를 묶는 방식으로 실험 보존 수준을 높였습니다.",
       "CubeSat과 로켓 프로젝트도 제작 버전과 시험 결과를 연결해 장기적으로 engineering log 형태로 공개할 계획입니다.",
     ],
-    metrics: ["Configuration", "Results", "Failure analysis", "Next-change rule"],
+    metrics: ["Configuration", "Results", "Evidence review", "Reproducible workflow"],
     image: expoInteriorImage,
     status: "OPERATIONS",
   },

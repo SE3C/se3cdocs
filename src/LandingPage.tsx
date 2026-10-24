@@ -46,7 +46,7 @@ export default function LandingPage() {
         <a href="#mission" aria-label="미션으로 이동" className="scroll-cue"><ArrowDown size={22} /></a>
       </section>
       <section id="mission" className="mission-statement">
-        <div className="mission-statement-copy"><p className="eyebrow">OUR MISSION</p><h2>다음 실험은<br />이전 기록에서 시작됩니다.</h2><p>SE3C는 기구·회로·소프트웨어·운영을 하나의 검증 과정으로 연결합니다. 결과물뿐 아니라 설정, 실패와 다음 변경점을 남겨 프로젝트가 다음 사람에게도 이어지게 만듭니다.</p><Link to="/tests" className="outline-cta">검증 기록 보기 <ArrowRight size={16} /></Link></div>
+        <div className="mission-statement-copy"><p className="eyebrow">OUR MISSION</p><h2>다음 실험은<br />이전 기록에서 시작됩니다.</h2><p>SE3C는 기구·회로·소프트웨어·운영을 하나의 검증 과정으로 연결합니다. 결과물과 실험 조건, 검증 데이터, 후속 성과를 함께 남겨 프로젝트가 다음 사람에게도 이어지게 만듭니다.</p><Link to="/tests" className="outline-cta">검증 기록 보기 <ArrowRight size={16} /></Link></div>
         <dl className="mission-stats" aria-label="SE3C 2026 활동 지표"><div><dt>03</dt><dd>ACTIVE<br />PROJECT TRACKS</dd></div><div><dt>04</dt><dd>ENGINEERING<br />DISCIPLINES</dd></div><div><dt>2026</dt><dd>PUBLIC<br />ENGINEERING LOG</dd></div></dl>
       </section>
       <div id="projects">
