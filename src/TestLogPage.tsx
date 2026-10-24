@@ -9,8 +9,8 @@ const testRecords = [
   { id: "LOG 002", date: "2026.10.11", status: "SUBMITTED", title: "H1 · Preliminary Round 6", description: "공식 서버에서 10,000 iteration 학습한 ACTRATE-0001 정책을 제출하고, keeper model_9999 및 제출 actor의 대응을 검증했습니다.", href: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/naver-issacsim/data/processed/experiments/h1/2026-10-11_PRELIM_R6_SUBMISSION/release_notes.md" },
   { id: "LOG 003", date: "2026.10.08", status: "RECORDED", title: "Go2 · Preliminary Round 5", description: "공식 결과 수신 기록: 총점 88.32/100, 시뮬레이션 58.32/70, 설계 의도 20/20, 리포트 품질 10/10.", href: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/naver-issacsim/data/processed/experiments/go2/analysis/2026-10-08_OFFICIAL_EVAL_GO2_ROUND5_LINTRACK125.md" },
   { id: "LOG 004", date: "2026.08", status: "DOCUMENTED", title: "H1 reinforcement-learning baseline", description: "NVIDIA Isaac Sim / Isaac Lab 환경에서 4,096개 병렬 환경, seed 42, 300 iteration 기준선의 학습·export·play 검증 흐름을 기록했습니다.", to: "/tech/robotics-ai" },
-  { id: "LOG 005", date: "TBD", status: "PLANNED", title: "High-altitude telemetry validation", description: "관련 허가 절차와 지상 통합 시험이 완료된 뒤, 웨더벌룬 탑재 환경에서 telemetry 수집과 시스템 동작을 검증할 예정입니다.", to: "/tech/high-altitude-flight" },
-  { id: "LOG 006", date: "TBD", status: "IN DEVELOPMENT", title: "Rapid-prototyping workflow", description: "장비 도입 후 구조 부품, 센서 마운트와 시험 지그의 설계·출력·검증 기록을 공개 가능한 범위에서 축적합니다.", to: "/tech/fabrication" },
+  { id: "LOG 005", date: "2026.06", status: "DOCUMENTED", title: "CubeSat & CAD prototyping", description: "큐브형 위성 구조 시제품과 로켓 노즐 3D 형상 모델링 등 실제 제작·설계 결과물을 기록했습니다.", to: "/tech/fabrication" },
+  { id: "LOG 006", date: "2025.11", status: "DOCUMENTED", title: "Songpa Education Expo · STEM outreach", description: "우주탐사차량과 우주정거장 만들기 체험 부스를 운영한 활동을 공개된 행사 사진과 함께 소개합니다.", to: "/outreach" },
 ];
 
 export default function TestLogPage() {

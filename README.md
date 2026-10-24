@@ -4,12 +4,12 @@ SE3C (Space Exploration Engineering Experimental Club) 공개 홈페이지입니
 
 ## 2026 update
 
-- CubeSat system prototype / telemetry
+- CubeSat structural prototype and ESP32-centered design
 - Rocket engineering
 - NCRC 2026 · H1 + Go2 reinforcement learning, official evaluation and submission records
 - Software & engineering data workflow
-- 3D printing / rapid prototyping (upcoming)
-- High-altitude weather-balloon flight test (upcoming, permission-first)
+- CAD modeling, rocket nozzle geometry, and structural mockups
+- Space engineering outreach and documented project achievements
 
 ## Local development
 
@@ -47,3 +47,9 @@ npm run lint
 - Public self-evaluation datasets (33 ZIPs / 132 videos) are linked via the source repository Releases, rather than copied into this website.
 - Existing `public/media/ncrc-h1-play.mp4` is identified as the **2026-08 baseline** video, not an October submission video.
 - The source project's license is undecided; the website links to sources without republishing their datasets.
+
+## Sponsor-facing public content
+
+The site publishes verified outcomes and curated photographs, not detailed implementation files. The ESP32 project is described at the overall design level, and the earlier Raspberry Pi prototype is labeled as historical. CAD work is presented through already-public 3D models, concept sketches, and structural mockup images. No current flight completion or new equipment acquisition is implied.
+
+Do not publish firmware, circuit connections, exact component configurations, internal PDFs, personal data, or private budget records here. New media requires separate review before publication.
