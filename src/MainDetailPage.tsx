@@ -86,6 +86,26 @@ export default function MainDetailPage() {
                 </section>
               )}
 
+              {detail.videos && detail.videos.length > 0 && (
+                <section className="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 sm:p-7 md:rounded-[2rem] md:p-9">
+                  <p className="section-kicker">NCRC 시뮬레이션 영상</p>
+                  <h2 className="mt-2 text-2xl font-semibold text-white">Go2 R5 · H1 R6</h2>
+                  <p className="mt-3 text-sm leading-6 text-slate-400">실제 시뮬레이션 화면을 기록한 영상입니다. 공식 평가 점수와 제출 여부는 위 근거 문서에서 별도로 확인할 수 있습니다.</p>
+                  <div className="mt-6 grid gap-5">
+                    {detail.videos.map((clip) => (
+                      <figure key={clip.src} className="overflow-hidden rounded-2xl border border-slate-800 bg-black">
+                        <h3 className="px-4 py-4 text-base font-medium text-white sm:px-5">{clip.title}</h3>
+                        <video className="aspect-video w-full object-contain" controls playsInline preload="metadata" poster={clip.poster}>
+                          <source src={clip.src} type="video/mp4" />
+                          브라우저가 MP4 영상을 지원하지 않습니다.
+                        </video>
+                        <figcaption className="px-4 py-4 text-xs leading-6 text-slate-400 sm:px-5">{clip.caption}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                </section>
+              )}
+
               {detail.video && (
                 <section className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950/70 md:rounded-[2rem]">
                   <div className="p-5 pb-4 sm:p-7 sm:pb-5">

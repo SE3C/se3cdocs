@@ -34,6 +34,7 @@ export type DetailPage = {
   tags?: string[];
   gallery?: { src: string; alt: string; caption?: string }[];
   video?: { src: string; poster?: string; title?: string; caption: string };
+  videos?: { src: string; poster?: string; title: string; caption: string }[];
   researchMilestones?: { date: string; label: string; title: string; description: string; url: string }[];
   sources?: { title: string; description: string; url: string }[];
 };
@@ -144,6 +145,20 @@ export const detailPages: DetailPage[] = [
       { title: "H1 6라운드 제출 기록", description: "정책 식별·공식 학습 체크포인트 대응", url: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/naver-issacsim/data/processed/experiments/h1/2026-10-11_PRELIM_R6_SUBMISSION/release_notes.md" },
       { title: "자체 평가 명세", description: "시나리오·추종 오차·정책 비교 계산 기준", url: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/naver-issacsim-eval/SCORING_SPEC.md" },
       { title: "공개 평가 영상 및 데이터", description: "선별된 실험별 GitHub Releases", url: "https://github.com/SE3C/naver-issacsim-opensource/releases" },
+    ],
+    videos: [
+      {
+        src: "/media/ncrc-go2-r5.mp4",
+        poster: ncrcPosterImage,
+        title: "Go2 · NCRC 예선 5라운드 시뮬레이션",
+        caption: "Go2 R5 보행 시뮬레이션 녹화 · 20초 · 공식 평가 점수는 별도 근거 문서에 기록되어 있습니다.",
+      },
+      {
+        src: "/media/ncrc-h1-r6.mp4",
+        poster: ncrcPosterImage,
+        title: "H1 · NCRC 예선 6라운드 시뮬레이션",
+        caption: "H1 R6 보행 시뮬레이션 녹화 · 20초 · 제출된 정책의 식별 정보는 별도 제출 문서로 확인합니다.",
+      },
     ],
     video: {
       src: "/media/ncrc-h1-play.mp4",
