@@ -1,5 +1,7 @@
 import satelliteMonitorImage from "./assets/satellite-monitor.jpeg";
 import satelliteInteriorImage from "./assets/drive/satellite-interior.jpeg";
+import statusLedBuzzerCode1Image from "./assets/2026/status-led-buzzer-code-review-1.jpg";
+import statusLedBuzzerCode2Image from "./assets/2026/status-led-buzzer-code-review-2.jpg";
 import ncrcLeaderboardTopImage from "./assets/drive/sat-ncrc-leaderboard-top.png";
 import ncrcLeaderboardSe3cImage from "./assets/drive/sat-ncrc-leaderboard-se3c.png";
 import expoOfficialPosterImage from "./assets/drive/songpa-expo-official-poster.jpg";
@@ -161,13 +163,18 @@ export const detailPages: DetailPage[] = [
     body: [
       "소프트웨어팀은 단순 앱 제작보다 실제 하드웨어가 만들어내는 데이터를 안정적으로 읽고 해석하는 역할에 집중하고 있습니다. 센서별 모듈을 나누고 공통 설정과 출력 계층을 분리해 여러 팀원이 동시에 작업할 수 있는 구조를 설계했습니다.",
       "위성 프로젝트에서는 센서 기능을 모듈화하고 모의 데이터를 활용해 진단·기록·시각화 흐름을 검토했습니다. 최신 온보드 설계는 ESP32 중심으로 개발하고 있습니다.",
+      "2026년 10월에는 위성 장치의 상태를 LED와 부저로 표현하는 C++ 코드의 헤더와 구현 구조를 검토했습니다. 실제 동작 시험 성과와 혼동하지 않도록 코드 검토 사진을 별도로 기록했습니다.",
       "NCRC 프로젝트에서는 TensorBoard event, console log, checkpoint, env 설정과 hash를 함께 보존하는 실험 기록 체계까지 다룹니다. 하드웨어와 AI 프로젝트가 달라도 데이터와 재현성을 관리하는 공통 소프트웨어 기반을 만드는 것이 목표입니다.",
       "공개 가능한 프로젝트와 기술 문서는 GitHub를 통해 점진적으로 정리할 예정입니다.",
     ],
-    metrics: ["Python module structure", "Telemetry validation", "Data visualization", "Experiment reproducibility"],
-    image: satelliteMonitorImage,
+    metrics: ["C++ status indicator review", "ESP32-oriented software design", "Telemetry data flow", "Engineering documentation"],
+    image: statusLedBuzzerCode2Image,
     status: "ACTIVE",
-    tags: ["PYTHON", "DATA", "WEB", "LOGGING"],
+    tags: ["C++", "ESP32", "LED / BUZZER", "DOCUMENTATION"],
+    gallery: [
+      { src: statusLedBuzzerCode1Image, alt: "상태 표시 LED와 부저 모듈 헤더 구조 검토 사진", caption: "2026.10 · 상태 표시 LED·부저 모듈의 C++ 헤더 구성 검토" },
+      { src: statusLedBuzzerCode2Image, alt: "상태 표시 LED와 부저 모듈 구현 코드 검토 사진", caption: "2026.10 · 상태 표시 LED·부저 모듈의 C++ 구현 구조 검토 · 장치 동작 검증과 별개" },
+    ],
   },
   {
     category: "tech",

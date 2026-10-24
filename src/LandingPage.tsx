@@ -6,6 +6,7 @@ import cubesatImage from "./assets/2026/cubesat-integration.webp";
 import rocketImage from "./assets/2026/rocket-workbench.webp";
 import ncrcPosterImage from "./assets/2026/ncrc-h1-poster.webp";
 import fabricationImage from "./assets/nozzle-model.jpg";
+import softwareCodeImage from "./assets/2026/status-led-buzzer-code-review-2.jpg";
 import PublicHeader from "./PublicHeader";
 import PublicFooter from "./PublicFooter";
 import useHideChromeOnScroll from "./useHideChromeOnScroll";
@@ -18,6 +19,7 @@ const milestones = [
   ["06", "STRUCTURE & CAD", "큐브형 구조 시제품과 로켓 노즐 CAD 모델링을 기록했습니다."],
   ["08", "H1 BASELINE", "Isaac Lab 기반 H1 학습·export·play 검증 흐름을 구축했습니다."],
   ["10", "CUBESAT · ESP32", "온보드 제어 시스템을 ESP32 중심으로 재설계하고 있습니다."],
+  ["10", "C++ CODE REVIEW", "위성 상태 표시 LED·부저 모듈의 C++ 코드 구조를 검토했습니다."],
   ["10", "NCRC · H1 & GO2", "Go2 공식 평가 기록을 확보하고 H1 예선 6라운드 정책을 제출했습니다."],
   ["10", "RESEARCH PUBLICATION", "H1·Go2 연구 자료와 자체 평가 도구·영상을 선별 공개했습니다."],
 ];
@@ -55,7 +57,8 @@ export default function LandingPage() {
         <ProjectSection index="02" eyebrow="ROCKET ENGINEERING · ACTIVE" title="설계에서 시험까지." description="기체 구조, 추진, 회수와 제작 과정을 직접 다루며 반복적인 실험을 통해 로켓 시스템을 개선합니다." to="/tech/rocket" image={rocketImage} align="right" />
         <ProjectSection index="03" eyebrow="ROBOTICS · AI · ACTIVE" title="휴머노이드에게 걷는 법을 학습시키다." description="Isaac Sim / Isaac Lab으로 H1·Go2 보행 정책을 연구했습니다. Go2 예선 5라운드 88.32점의 공식 평가 기록과 H1 예선 6라운드 제출 기록을 공개합니다." to="/tech/robotics-ai" image={ncrcPosterImage} video="/media/ncrc-h1-play.mp4" />
         <ProjectSection index="04" eyebrow="CAD & STRUCTURAL DESIGN · RESEARCH" title="설계 아이디어를 3D 형태로." description="로켓 노즐 CAD 모델링과 위성 구조 스케치·목업 제작으로 공학 설계를 시각화하고 검토했습니다." to="/tech/fabrication" image={fabricationImage} align="right" />
-        <ProjectSection index="05" eyebrow="SPACE EDUCATION · OUTREACH" title="우주공학을 함께 체험하다." description="2025년 송파교육박람회에서 우주탐사차량과 우주정거장 만들기 체험 부스를 운영했습니다." to="/outreach" image={heroImage} />
+        <ProjectSection index="05" eyebrow="EMBEDDED SOFTWARE · ACTIVE" title="하드웨어의 상태를 코드로 표현하다." description="2026년 10월, LED·부저 상태 표시 모듈의 C++ 헤더와 구현 구조를 검토했습니다. 코드 작업 현장을 사진으로 기록했습니다." to="/tech/software" image={softwareCodeImage} />
+        <ProjectSection index="06" eyebrow="SPACE EDUCATION · OUTREACH" title="우주공학을 함께 체험하다." description="2025년 송파교육박람회에서 우주탐사차량과 우주정거장 만들기 체험 부스를 운영했습니다." to="/outreach" image={heroImage} align="right" />
       </div>
       <section className="engineering-log"><div className="engineering-log-heading"><p className="eyebrow">2025–2026 ENGINEERING LOG</p><h2>만든 것, 시험한 것,<br />그리고 다음 단계.</h2></div><ol className="milestone-list">{milestones.map(([date, title, description]) => <li key={title}><p>{date}</p><div><h3>{title}</h3><span>{description}</span></div></li>)}</ol><div className="engineering-log-actions"><Link to="/projects" className="outline-cta">전체 프로젝트 보기 <ArrowRight size={16} /></Link><a href="https://github.com/SE3C" target="_blank" rel="noreferrer" className="text-cta"><Github size={17} /> GitHub에서 보기</a></div></section>
     </main>
