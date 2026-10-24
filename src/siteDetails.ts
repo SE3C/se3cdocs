@@ -1,4 +1,8 @@
 import satelliteMonitorImage from "./assets/satellite-monitor.jpeg";
+import satelliteInteriorImage from "./assets/drive/satellite-interior.jpeg";
+import ncrcLeaderboardTopImage from "./assets/drive/sat-ncrc-leaderboard-top.png";
+import ncrcLeaderboardSe3cImage from "./assets/drive/sat-ncrc-leaderboard-se3c.png";
+import expoOfficialPosterImage from "./assets/drive/songpa-expo-official-poster.jpg";
 import satelliteSketchImage from "./assets/satellite-sketch.jpeg";
 import nozzleModelImage from "./assets/nozzle-model.jpg";
 import expoBoothImage from "./assets/expo-booth.jpg";
@@ -55,6 +59,7 @@ export const detailPages: DetailPage[] = [
       { src: sensorBenchImage, alt: "센서 시험 환경", caption: "초기 센서 시험 환경 구성" },
       { src: piCloseupImage, alt: "초기 온보드 배치", caption: "Raspberry Pi 기반 초기 시제품의 부품 배치 기록" },
       { src: sensorBenchCloseImage, alt: "센서 벤치 확대", caption: "센서 시험을 위한 초기 벤치 작업" },
+      { src: satelliteInteriorImage, alt: "과거 CubeSat 초기 내부 구조 모형", caption: "초기 Raspberry Pi 기반 구조 시제품 내부 조립 사진 · 현행 ESP32 시스템과 구분" },
     ],
   },
   {
@@ -98,6 +103,10 @@ export const detailPages: DetailPage[] = [
     image: ncrcPosterImage,
     status: "ACTIVE",
     tags: ["H1", "GO2", "ISAAC LAB", "PPO", "EVALUATION"],
+    gallery: [
+      { src: ncrcLeaderboardTopImage, alt: "2026 NCRC 예선 TOP 32 화면", caption: "2026년 9월 18일 보존한 NCRC 예선 TOP 32 화면" },
+      { src: ncrcLeaderboardSe3cImage, alt: "2026 NCRC 예선 순위의 SE3C 항목", caption: "2026년 9월 18일 화면에 표시된 SE3C 예선 순위 기록 · 해당 시점의 화면" },
+    ],
     researchMilestones: [
       {
         date: "2026.08",
@@ -252,6 +261,7 @@ export const detailPages: DetailPage[] = [
       { src: expoBoothImage, alt: "체험 부스 전경", caption: "2025 송파교육박람회 우주공학 체험 부스" },
       { src: expoInteriorImage, alt: "체험 부스 활동 공간", caption: "과학 체험 프로그램 운영 공간" },
       { src: expoExperienceImage, alt: "우주공학 체험 활동", caption: "우주탐사차량·우주정거장 만들기 체험 활동" },
+      { src: expoOfficialPosterImage, alt: "송파구 2025 송파교육박람회 공식 홍보 포스터", caption: "2025년 제6회 송파교육박람회 행사 공식 홍보 포스터 · 출처: 송파구" },
     ],
   },
   {
