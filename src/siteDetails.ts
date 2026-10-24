@@ -28,7 +28,9 @@ export type DetailPage = {
   status?: DetailStatus;
   tags?: string[];
   gallery?: { src: string; alt: string; caption?: string }[];
-  video?: { src: string; poster?: string; caption: string };
+  video?: { src: string; poster?: string; title?: string; caption: string };
+  researchMilestones?: { date: string; label: string; title: string; description: string; url: string }[];
+  sources?: { title: string; description: string; url: string }[];
 };
 
 export const detailPages: DetailPage[] = [
@@ -82,23 +84,63 @@ export const detailPages: DetailPage[] = [
     category: "tech",
     id: "robotics-ai",
     label: "로보틱스·AI",
-    title: "NCRC 2026 · 휴머노이드 강화학습",
+    title: "NCRC 2026 · 로봇 강화학습",
     summary:
-      "NAVER CONNECT Robotics Cup 2026 준비 과정에서 NVIDIA Isaac Sim / Isaac Lab 기반 Unitree H1 휴머노이드 보행 정책을 강화학습으로 분석·검증하고 있습니다.",
+      "NCRC 2026을 준비하며 NVIDIA Isaac Sim / Isaac Lab에서 Unitree H1 휴머노이드와 Go2 사족보행 로봇의 보행 정책을 학습하고 검증한 기록입니다.",
     body: [
-      "2026년 7월부터 SE3C는 로보틱스와 강화학습을 새로운 프로젝트 축으로 확장했습니다. Isaac Sim과 Isaac Lab 환경에서 H1 휴머노이드의 locomotion task, reward 구조, checkpoint, play 검증 흐름을 분석하고 있습니다.",
-      "공식 서버 기준선 실험에서는 4,096개 병렬 환경, seed 42, 300 iterations로 학습·checkpoint·환경 export·policy/ONNX export·play 영상 생성 파이프라인을 확인했습니다. 이 짧은 기준선은 안정 보행 성능을 주장하기 위한 결과가 아니라 이후 실험을 비교하기 위한 기준점입니다.",
-      "별도의 개인 NVIDIA/Brev 검증 환경에서는 termination penalty를 변경한 25,000-iteration 장기 실행을 수행해 TensorBoard 시계열, terrain progression, episode length, checkpoint 선택 문제를 분석했습니다. 이 결과는 공식 제출 정책과 분리된 연구·검증 자료로 관리합니다.",
-      "현재는 한 번에 한 변수만 바꾸는 실험 설계, 전체 run 폴더와 event·console·GPU 기록 보존, checkpoint 재검증 등 재현 가능한 ML engineering 절차를 정리하고 있습니다. 아래 영상은 NVIDIA 서버 환경에서 생성한 H1 play 캡처입니다.",
+      "2026년 7월부터 로보틱스·강화학습 연구를 새로운 프로젝트 축으로 확장했습니다. Isaac Sim과 Isaac Lab을 활용해 H1과 Go2의 보행 정책, 보상 함수, 체크포인트, 정책 평가와 실험 재현성을 연구했습니다.",
+      "8월에는 H1 기준선 실험에서 공식 서버의 4,096개 병렬 환경, seed 42, 300 iteration 조건으로 학습·체크포인트·export·play 파이프라인을 검증했습니다. 이후 장기 학습과 지형별 정책 평가, 데이터 분석으로 연구 범위를 확장했습니다.",
+      "Go2의 예선 5라운드 공식 평가 수신 기록(2026-10-08)에는 종합 88.32/100점이 남아 있습니다. 시뮬레이션 58.32/70점, 설계 의도 분석 20/20점, 리포트 품질 10/10점으로 항목별 결과를 보존했습니다.",
+      "2026-10-11에는 H1 ACTRATE-0001 정책의 예선 6라운드 제출을 완료했습니다. 공식 서버에서 10,000 iteration 학습한 모델의 keeper checkpoint(model_9999)와 제출 정책의 actor 텐서 8개를 CPU로 대조해 출처를 검증했습니다.",
+      "별도 PERSONAL 평가 환경에서는 6개 지형 영상, camera-off scenario7 데이터, 생존·속도 추종·자세·이동 통계를 수집했습니다. 자체 평가 지표는 후보 정책 비교에 활용하며 대회 공식 점수와 구분해 기록합니다.",
+      "2026-10-23 공개 보관본에는 H1·Go2 연구 문서와 자체 평가 도구, 선별 평가 데이터가 공개됐습니다. 영상 132개가 포함된 33개 평가 ZIP과 출처·검증 기록을 GitHub에서 확인할 수 있습니다.",
     ],
-    metrics: ["Isaac Sim / Isaac Lab", "H1 · 4,096 parallel envs", "300-iter official baseline", "25K private validation run"],
+    metrics: ["H1 + Go2 · Isaac Lab / PPO", "Go2 R5 · 공식 평가 88.32 / 100", "H1 R6 · 공식 학습 10K / 제출 완료", "33 evaluation ZIPs · 132 videos"],
     image: ncrcPosterImage,
     status: "ACTIVE",
-    tags: ["H1", "PPO", "ISAAC LAB", "REINFORCEMENT LEARNING"],
+    tags: ["H1", "GO2", "ISAAC LAB", "PPO", "EVALUATION"],
+    researchMilestones: [
+      {
+        date: "2026.08",
+        label: "학습 파이프라인",
+        title: "H1 공식 서버 기준선 구축",
+        description: "4,096개 병렬 환경을 이용해 학습부터 정책 export, play 영상 생성까지의 워크플로를 검증했습니다.",
+        url: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/naver-issacsim-originals/data/raw/official_server_runs/h1/2026-08-24_124413_baseline_300iter/README.md",
+      },
+      {
+        date: "2026.10.08",
+        label: "대회 공식 평가 기록",
+        title: "Go2 · 예선 5라운드 88.32점",
+        description: "시뮬레이션 58.32/70, 설계 의도 20/20, 리포트 10/10의 공식 결과 수신 기록을 보존했습니다.",
+        url: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/naver-issacsim/data/processed/experiments/go2/analysis/2026-10-08_OFFICIAL_EVAL_GO2_ROUND5_LINTRACK125.md",
+      },
+      {
+        date: "2026.10.11",
+        label: "대회 제출 기록",
+        title: "H1 · 예선 6라운드 정책 제출",
+        description: "ACTRATE-0001 공식 학습 10,000 iteration을 마치고 model_9999 기반 제출 정책의 출처를 CPU에서 대조했습니다.",
+        url: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/naver-issacsim/data/processed/experiments/h1/2026-10-11_PRELIM_R6_SUBMISSION/release_notes.md",
+      },
+      {
+        date: "2026.10.23",
+        label: "연구 성과 공개",
+        title: "H1·Go2 데이터와 평가 도구 공개",
+        description: "33개 평가 ZIP, 132개 영상과 연구 문서·검증 기록을 선별 공개했습니다.",
+        url: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/_publication/VERIFICATION.md",
+      },
+    ],
+    sources: [
+      { title: "공개 연구·평가 저장소", description: "H1·Go2 분석, 도구, 출처 보존 문서", url: "https://github.com/SE3C/naver-issacsim-opensource" },
+      { title: "Go2 5라운드 공식 평가 기록", description: "88.32/100점과 항목별 성적의 출처", url: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/naver-issacsim/data/processed/experiments/go2/analysis/2026-10-08_OFFICIAL_EVAL_GO2_ROUND5_LINTRACK125.md" },
+      { title: "H1 6라운드 제출 기록", description: "정책 식별·공식 학습 체크포인트 대응", url: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/naver-issacsim/data/processed/experiments/h1/2026-10-11_PRELIM_R6_SUBMISSION/release_notes.md" },
+      { title: "자체 평가 명세", description: "시나리오·추종 오차·정책 비교 계산 기준", url: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/naver-issacsim-eval/SCORING_SPEC.md" },
+      { title: "공개 평가 영상 및 데이터", description: "선별된 실험별 GitHub Releases", url: "https://github.com/SE3C/naver-issacsim-opensource/releases" },
+    ],
     video: {
       src: "/media/ncrc-h1-play.mp4",
       poster: ncrcPosterImage,
-      caption: "H1 play capture · NVIDIA server environment · 2026.08",
+      title: "H1 · 2026년 8월 시뮬레이션 캡처",
+      caption: "H1 play · NVIDIA 서버 · 2026.08 기준선 실험 영상 (10월 정책 영상과 별개)",
     },
   },
   {

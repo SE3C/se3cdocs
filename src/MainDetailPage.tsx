@@ -67,11 +67,30 @@ export default function MainDetailPage() {
                 </div>
               </article>
 
+              {detail.researchMilestones && detail.researchMilestones.length > 0 && (
+                <section className="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 sm:p-7 md:rounded-[2rem] md:p-9">
+                  <p className="section-kicker">연구 · 제출 · 공개 기록</p>
+                  <h2 className="mt-2 text-2xl font-semibold text-white">주요 성과</h2>
+                  <ol className="mt-6 space-y-4">
+                    {detail.researchMilestones.map((milestone) => (
+                      <li key={milestone.date + milestone.title} className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 sm:p-5">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400">
+                          <time>{milestone.date}</time><span>·</span><span>{milestone.label}</span>
+                        </div>
+                        <h3 className="mt-2 text-lg font-medium text-white">{milestone.title}</h3>
+                        <p className="mt-2 text-sm leading-7 text-slate-300">{milestone.description}</p>
+                        <a href={milestone.url} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-white underline decoration-slate-600 underline-offset-4 hover:decoration-white">근거 문서 <ArrowRight size={14} /></a>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              )}
+
               {detail.video && (
                 <section className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950/70 md:rounded-[2rem]">
                   <div className="p-5 pb-4 sm:p-7 sm:pb-5">
-                    <p className="section-kicker">학습 결과 영상</p>
-                    <h2 className="mt-2 text-2xl font-semibold text-white">H1 학습 결과</h2>
+                    <p className="section-kicker">시뮬레이션 영상</p>
+                    <h2 className="mt-2 text-2xl font-semibold text-white">{detail.video.title ?? "실험 영상"}</h2>
                   </div>
                   <video className="aspect-video w-full bg-black object-contain" controls playsInline preload="metadata" poster={detail.video.poster}>
                     <source src={detail.video.src} type="video/mp4" />
@@ -104,6 +123,21 @@ export default function MainDetailPage() {
                   {detail.metrics.map((metric) => <div key={metric} className="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-sm leading-6 text-slate-200">{metric}</div>)}
                 </div>
               </div>
+
+              {detail.sources && detail.sources.length > 0 && (
+                <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 sm:p-6 md:rounded-[2rem]">
+                  <p className="section-kicker">연구 자료 · 출처</p>
+                  <div className="mt-4 space-y-3">
+                    {detail.sources.map((source) => (
+                      <a key={source.url} href={source.url} target="_blank" rel="noopener noreferrer" className="group flex items-start justify-between gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-slate-600">
+                        <div><p className="text-sm font-medium text-white">{source.title}</p><p className="mt-2 text-xs leading-5 text-slate-400">{source.description}</p></div>
+                        <ArrowRight size={15} className="mt-1 shrink-0 text-slate-400 transition group-hover:translate-x-1" />
+                      </a>
+                    ))}
+                  </div>
+                  <p className="mt-4 text-xs leading-5 text-slate-500">공식 대회 평가와 자체 연구용 평가는 서로 다른 측정 결과입니다.</p>
+                </div>
+              )}
 
               {detail.category === "tech" && (
                 <a href="https://github.com/SE3C" target="_blank" rel="noreferrer" className="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-950/70 p-5 transition hover:border-slate-600 md:rounded-[2rem]">

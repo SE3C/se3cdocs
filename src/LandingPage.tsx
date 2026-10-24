@@ -15,7 +15,9 @@ type ProjectSectionProps = { index: string; eyebrow: string; title: string; desc
 const milestones = [
   ["03", "TEAM FORMATION", "프로젝트 중심의 역할과 기록 체계를 구성했습니다."],
   ["06", "HARDWARE INTEGRATION", "센서 벤치와 CubeSat 구조 프로토타입을 통합했습니다."],
-  ["08", "ROBOTICS BASELINE", "Isaac Lab 기반 H1 강화학습 검증 흐름을 구축했습니다."],
+  ["08", "H1 BASELINE", "Isaac Lab 기반 H1 학습·export·play 검증 흐름을 구축했습니다."],
+  ["10", "NCRC · H1 & GO2", "Go2 공식 평가 기록을 확보하고 H1 예선 6라운드 정책을 제출했습니다."],
+  ["10", "RESEARCH PUBLICATION", "H1·Go2 연구 자료와 자체 평가 도구·영상을 선별 공개했습니다."],
   ["NEXT", "PROTOTYPE & FLIGHT", "디지털 제작과 허가 기반 고고도 비행시험을 준비합니다."],
 ];
 
@@ -50,7 +52,7 @@ export default function LandingPage() {
       <div id="projects">
         <ProjectSection index="01" eyebrow="CUBESAT SYSTEM · ACTIVE" title="작은 위성을 직접 만들다." description="Raspberry Pi 기반 온보드 컴퓨터와 센서 시스템을 통합하고, 실제 비행 데이터를 수집하기 위한 위성 프로토타입을 개발하고 있습니다." to="/tech/cubesat" image={cubesatImage} />
         <ProjectSection index="02" eyebrow="ROCKET ENGINEERING · ACTIVE" title="설계에서 시험까지." description="기체 구조, 추진, 회수와 제작 과정을 직접 다루며 반복적인 실험을 통해 로켓 시스템을 개선합니다." to="/tech/rocket" image={rocketImage} align="right" />
-        <ProjectSection index="03" eyebrow="ROBOTICS · AI · ACTIVE" title="휴머노이드에게 걷는 법을 학습시키다." description="NCRC 2026을 준비하며 NVIDIA Isaac Sim / Isaac Lab 환경에서 Unitree H1 휴머노이드의 강화학습과 실험 재현성을 연구하고 있습니다." to="/tech/robotics-ai" image={ncrcPosterImage} video="/media/ncrc-h1-play.mp4" />
+        <ProjectSection index="03" eyebrow="ROBOTICS · AI · ACTIVE" title="휴머노이드에게 걷는 법을 학습시키다." description="Isaac Sim / Isaac Lab으로 H1·Go2 보행 정책을 연구했습니다. Go2 예선 5라운드 88.32점의 공식 평가 기록과 H1 예선 6라운드 제출 기록을 공개합니다." to="/tech/robotics-ai" image={ncrcPosterImage} video="/media/ncrc-h1-play.mp4" />
         <ProjectSection index="04" eyebrow="DIGITAL FABRICATION · UPCOMING" title="설계한 부품을 바로 현실로." description="3D 프린터 도입 후 위성·로켓 프로젝트용 구조 부품, 센서 마운트와 실험 지그를 직접 설계하고 제작할 예정입니다." to="/tech/fabrication" image={fabricationImage} align="right" muted />
       </div>
       <section className="engineering-log"><div className="engineering-log-heading"><p className="eyebrow">2026 ENGINEERING LOG</p><h2>만든 것, 시험한 것,<br />그리고 다음 단계.</h2></div><ol className="milestone-list">{milestones.map(([date, title, description]) => <li key={title}><p>{date}</p><div><h3>{title}</h3><span>{description}</span></div></li>)}</ol><div className="engineering-log-actions"><Link to="/projects" className="outline-cta">전체 프로젝트 보기 <ArrowRight size={16} /></Link><a href="https://github.com/SE3C" target="_blank" rel="noreferrer" className="text-cta"><Github size={17} /> GitHub에서 보기</a></div></section>

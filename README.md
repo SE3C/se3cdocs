@@ -6,7 +6,7 @@ SE3C (Space Exploration Engineering Experimental Club) 공개 홈페이지입니
 
 - CubeSat system prototype / telemetry
 - Rocket engineering
-- NCRC 2026 · Humanoid reinforcement learning
+- NCRC 2026 · H1 + Go2 reinforcement learning, official evaluation and submission records
 - Software & engineering data workflow
 - 3D printing / rapid prototyping (upcoming)
 - High-altitude weather-balloon flight test (upcoming, permission-first)
@@ -38,3 +38,12 @@ npm run lint
 - 카드형 랜딩 페이지 대신 full-viewport 프로젝트 섹션 구성
 - CubeSat / Rocket / NCRC / 3D Printing / High-Altitude Flight 업데이트
 - NCRC H1 play 영상 포함
+
+## NCRC public research (2026-10)
+
+- Project page: `/tech/robotics-ai` — H1/Go2 results, timeline, and evidence links.
+- Test log: `/tests` — publicly documented official evaluation receipt, H1 submission, and research archive.
+- Source: https://github.com/SE3C/naver-issacsim-opensource
+- Public self-evaluation datasets (33 ZIPs / 132 videos) are linked via the source repository Releases, rather than copied into this website.
+- Existing `public/media/ncrc-h1-play.mp4` is identified as the **2026-08 baseline** video, not an October submission video.
+- The source project's license is undecided; the website links to sources without republishing their datasets.
