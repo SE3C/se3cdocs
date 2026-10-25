@@ -14,7 +14,8 @@ import useHideChromeOnScroll from "./useHideChromeOnScroll";
 type ProjectSectionProps = { index: string; eyebrow: string; title: string; description: string; to: string; image: string; align?: "left" | "right"; video?: string; muted?: boolean };
 
 const milestones = [
-  ["2025", "SPACE OUTREACH", "송파교육박람회에서 우주탐사 체험 부스를 운영했습니다."],
+  ["2025.09", "SWIFTUI · AI WORKSHOP", "SwiftUI와 생성형 AI를 활용한 iOS 앱 개발 실습을 진행했습니다."],
+  ["2025.11", "SPACE OUTREACH", "송파교육박람회에서 우주탐사 체험 부스를 운영했습니다."],
   ["03", "TEAM FORMATION", "프로젝트 중심의 역할과 기록 체계를 구성했습니다."],
   ["06", "STRUCTURE & CAD", "큐브형 구조 시제품과 로켓 노즐 CAD 모델링을 기록했습니다."],
   ["08", "H1 BASELINE", "Isaac Lab 기반 H1 학습·export·play 검증 흐름을 구축했습니다."],
