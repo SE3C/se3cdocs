@@ -162,8 +162,18 @@ export default function MainDetailPage() {
               )}
 
               {detail.category === "tech" && (
-                <a href="https://github.com/SE3C" target="_blank" rel="noreferrer" className="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-950/70 p-5 transition hover:border-slate-600 md:rounded-[2rem]">
-                  <div><p className="section-kicker">공개 자료</p><p className="mt-2 text-base font-medium text-white">SE3C GitHub</p></div><Github size={20} />
+                <a
+                  href={detail.id === "robotics-ai" ? "https://github.com/SE3C/naver-issacsim-opensource" : "https://github.com/SE3C"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={detail.id === "robotics-ai" ? "NCRC 공개 연구 GitHub 저장소 열기 (새 탭)" : "SE3C GitHub 열기 (새 탭)"}
+                  className="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-950/70 p-5 transition hover:border-slate-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:rounded-[2rem]"
+                >
+                  <div>
+                    <p className="section-kicker">공개 자료</p>
+                    <p className="mt-2 text-base font-medium text-white">{detail.id === "robotics-ai" ? "NCRC 연구 GitHub" : "SE3C GitHub"}</p>
+                  </div>
+                  <Github size={20} aria-hidden="true" />
                 </a>
               )}
 
