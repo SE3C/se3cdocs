@@ -10,6 +10,7 @@ import softwareCodeImage from "./assets/2026/status-led-buzzer-code-review-2.jpg
 import PublicHeader from "./PublicHeader";
 import PublicFooter from "./PublicFooter";
 import useHideChromeOnScroll from "./useHideChromeOnScroll";
+import useScrollReveal from "./useScrollReveal";
 
 type ProjectSectionProps = { index: string; eyebrow: string; title: string; description: string; to: string; image: string; align?: "left" | "right"; video?: string; muted?: boolean };
 
@@ -26,7 +27,7 @@ const milestones = [
 ];
 
 function ProjectSection({ index, eyebrow, title, description, to, image, align = "left", video, muted = false }: ProjectSectionProps) {
-  return <section className="project-panel">
+  return <section className="project-panel" data-reveal="scene">
     {video ? <video className="project-media" autoPlay muted loop playsInline preload="metadata" poster={image}><source src={video} type="video/mp4" /></video> : <img src={image} alt="" className="project-media" loading="lazy" />}
     <div className={`project-overlay ${muted ? "project-overlay-heavy" : ""}`} />
     <div className={`project-copy ${align === "right" ? "project-copy-right" : ""}`}>
@@ -38,6 +39,7 @@ function ProjectSection({ index, eyebrow, title, description, to, image, align =
 
 export default function LandingPage() {
   const isChromeHidden = useHideChromeOnScroll();
+  useScrollReveal();
   const location = useLocation();
   useEffect(() => { window.scrollTo({ top: 0, behavior: "auto" }); }, [location.pathname]);
 
@@ -50,8 +52,8 @@ export default function LandingPage() {
         <a href="#mission" aria-label="미션으로 이동" className="scroll-cue"><ArrowDown size={22} /></a>
       </section>
       <section id="mission" className="mission-statement">
-        <div className="mission-statement-copy"><p className="eyebrow">OUR MISSION</p><h2>다음 실험은<br />이전 기록에서 시작됩니다.</h2><p>SE3C는 기구·회로·소프트웨어·운영을 하나의 검증 과정으로 연결합니다. 결과물과 실험 조건, 검증 데이터, 후속 성과를 함께 남겨 프로젝트가 다음 사람에게도 이어지게 만듭니다.</p><Link to="/tests" className="outline-cta">검증 기록 보기 <ArrowRight size={16} /></Link></div>
-        <dl className="mission-stats" aria-label="SE3C 2026 활동 지표"><div><dt>03</dt><dd>ACTIVE<br />PROJECT TRACKS</dd></div><div><dt>04</dt><dd>ENGINEERING<br />DISCIPLINES</dd></div><div><dt>2026</dt><dd>PUBLIC<br />ENGINEERING LOG</dd></div></dl>
+        <div className="mission-statement-copy" data-reveal="fade"><p className="eyebrow">OUR MISSION</p><h2>다음 실험은<br />이전 기록에서 시작됩니다.</h2><p>SE3C는 기구·회로·소프트웨어·운영을 하나의 검증 과정으로 연결합니다. 결과물과 실험 조건, 검증 데이터, 후속 성과를 함께 남겨 프로젝트가 다음 사람에게도 이어지게 만듭니다.</p><Link to="/tests" className="outline-cta">검증 기록 보기 <ArrowRight size={16} /></Link></div>
+        <dl className="mission-stats" data-reveal="fade" aria-label="SE3C 2026 활동 지표"><div><dt>03</dt><dd>ACTIVE<br />PROJECT TRACKS</dd></div><div><dt>04</dt><dd>ENGINEERING<br />DISCIPLINES</dd></div><div><dt>2026</dt><dd>PUBLIC<br />ENGINEERING LOG</dd></div></dl>
       </section>
       <div id="projects">
         <ProjectSection index="01" eyebrow="CUBESAT SYSTEM · ACTIVE" title="작은 위성을 직접 만들다." description="초기 큐브형 구조 시제품을 제작한 경험을 바탕으로 ESP32 중심의 소형 위성 제어 시스템을 개발하고 있습니다." to="/tech/cubesat" image={cubesatImage} />
@@ -61,7 +63,7 @@ export default function LandingPage() {
         <ProjectSection index="05" eyebrow="EMBEDDED SOFTWARE · ACTIVE" title="하드웨어의 상태를 코드로 표현하다." description="2026년 10월, LED·부저 상태 표시 모듈의 C++ 헤더와 구현 구조를 검토했습니다. 코드 작업 현장을 사진으로 기록했습니다." to="/tech/software" image={softwareCodeImage} />
         <ProjectSection index="06" eyebrow="SPACE EDUCATION · OUTREACH" title="우주공학을 함께 체험하다." description="2025년 송파교육박람회에서 우주탐사차량과 우주정거장 만들기 체험 부스를 운영했습니다." to="/outreach" image={heroImage} align="right" />
       </div>
-      <section className="engineering-log"><div className="engineering-log-heading"><p className="eyebrow">2025–2026 ENGINEERING LOG</p><h2>만든 것, 시험한 것,<br />그리고 다음 단계.</h2></div><ol className="milestone-list">{milestones.map(([date, title, description]) => <li key={title}><p>{date}</p><div><h3>{title}</h3><span>{description}</span></div></li>)}</ol><div className="engineering-log-actions"><Link to="/projects" className="outline-cta">전체 프로젝트 보기 <ArrowRight size={16} /></Link><a href="https://github.com/SE3C" target="_blank" rel="noreferrer" className="text-cta"><Github size={17} /> GitHub에서 보기</a></div></section>
+      <section className="engineering-log"><div className="engineering-log-heading" data-reveal="fade"><p className="eyebrow">2025–2026 ENGINEERING LOG</p><h2>만든 것, 시험한 것,<br />그리고 다음 단계.</h2></div><ol className="milestone-list">{milestones.map(([date, title, description]) => <li key={title} data-reveal="fade"><p>{date}</p><div><h3>{title}</h3><span>{description}</span></div></li>)}</ol><div className="engineering-log-actions" data-reveal="fade"><Link to="/projects" className="outline-cta">전체 프로젝트 보기 <ArrowRight size={16} /></Link><a href="https://github.com/SE3C" target="_blank" rel="noreferrer" className="text-cta"><Github size={17} /> GitHub에서 보기</a></div></section>
     </main>
     <PublicFooter />
   </div>;

@@ -34,6 +34,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <RouteMeta />
+      <div className="scroll-progress" aria-hidden="true" />
       <PublicRoutes />
     </BrowserRouter>
   );

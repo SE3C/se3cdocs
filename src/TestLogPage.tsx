@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PublicFooter from "./PublicFooter";
 import PublicHeader from "./PublicHeader";
 import { useDocumentMeta } from "./useDocumentMeta";
+import useScrollReveal from "./useScrollReveal";
 
 const testRecords = [
   { id: "LOG 001", date: "2026.10.23", status: "PUBLISHED", title: "H1 & Go2 · Open research archive", description: "H1·Go2 평가 ZIP 33개(영상 132개)와 별도 기술 보고서 6건을 선별 공개했습니다. 총 39개 Release의 출처·파일 검증 기록을 보존했습니다.", href: "https://github.com/SE3C/naver-issacsim-opensource/blob/main/_publication/VERIFICATION.md" },
@@ -16,10 +17,11 @@ const testRecords = [
 
 export default function TestLogPage() {
   useDocumentMeta("Test log", "SE3C의 학습·대회 제출·공개 연구 성과와 실험 기록입니다.");
+  useScrollReveal();
 
-  return <div className="test-log-page"><PublicHeader /><main><section className="test-log-hero"><p className="eyebrow">SE3C · ENGINEERING RECORD</p><h1>TEST<br />LOG</h1><p>학습·제출·평가·공개 성과를 기록하고, 주요 결과를 근거 문서에 연결합니다.</p></section><section className="test-records" aria-label="SE3C test records">{testRecords.map((record) => <article key={record.id} className="test-record"><div className="test-record-meta"><span>{record.id}</span><span>{record.date}</span><span>{record.status}</span></div><div><h2>{record.title}</h2><p>{record.description}</p></div>{"href" in record ? (
+  return <div className="test-log-page"><PublicHeader /><main><section className="test-log-hero"><p className="eyebrow">SE3C · ENGINEERING RECORD</p><h1>TEST<br />LOG</h1><p>학습·제출·평가·공개 성과를 기록하고, 주요 결과를 근거 문서에 연결합니다.</p></section><section className="test-records" aria-label="SE3C test records">{testRecords.map((record) => <article key={record.id} className="test-record" data-reveal="row"><div className="test-record-meta"><span>{record.id}</span><span>{record.date}</span><span>{record.status}</span></div><div><h2>{record.title}</h2><p>{record.description}</p></div>{"href" in record ? (
   <a href={record.href} target="_blank" rel="noopener noreferrer" className="test-record-link">SOURCE <ArrowRight size={17} /></a>
 ) : (
   <Link to={record.to} className="test-record-link">RECORD <ArrowRight size={17} /></Link>
-)}</article>)}</section><section className="test-log-note"><p className="eyebrow">PUBLICATION PRINCIPLE</p><h2>연구 성과는<br />근거와 함께 제시합니다.</h2><p>측정된 수치와 공개 자료를 출처 문서와 함께 제공합니다. 향후 프로젝트는 계획 상태로 구분해 갱신합니다.</p></section></main><PublicFooter /></div>;
+)}</article>)}</section><section className="test-log-note" data-reveal="fade"><p className="eyebrow">PUBLICATION PRINCIPLE</p><h2>연구 성과는<br />근거와 함께 제시합니다.</h2><p>측정된 수치와 공개 자료를 출처 문서와 함께 제공합니다. 향후 프로젝트는 계획 상태로 구분해 갱신합니다.</p></section></main><PublicFooter /></div>;
 }

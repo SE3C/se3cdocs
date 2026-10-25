@@ -5,6 +5,7 @@ import { detailPages, getDetailPath } from "./siteDetails";
 import PublicHeader from "./PublicHeader";
 import PublicFooter from "./PublicFooter";
 import useHideChromeOnScroll from "./useHideChromeOnScroll";
+import useScrollReveal from "./useScrollReveal";
 import NotFoundPage from "./NotFoundPage";
 
 export default function MainDetailPage() {
@@ -14,6 +15,7 @@ export default function MainDetailPage() {
   const detail = detailPages.find((item) => item.id === params.id && (!category || item.category === category));
   const related = detailPages.filter((item) => item.id !== params.id && item.category === detail?.category).slice(0, 3);
   const isChromeHidden = useHideChromeOnScroll();
+  useScrollReveal();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -28,7 +30,7 @@ export default function MainDetailPage() {
       <PublicHeader isChromeHidden={isChromeHidden} />
 
       <main>
-        <section className="px-3 pt-3 sm:px-4 md:px-6 md:pt-6">
+        <section className="detail-hero px-3 pt-3 sm:px-4 md:px-6 md:pt-6">
           <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 shadow-2xl md:rounded-[2rem]">
             <div className="relative min-h-[560px] sm:min-h-[620px] md:min-h-[720px]">
               <img src={detail.image} alt={detail.title} className="absolute inset-0 h-full w-full object-cover" />
@@ -58,7 +60,7 @@ export default function MainDetailPage() {
         <section className="px-3 py-5 sm:px-4 md:px-6 md:py-10">
           <div className="grid gap-5 lg:grid-cols-[1.45fr_.65fr] lg:gap-6">
             <div className="space-y-5">
-              <article className="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 sm:p-7 md:rounded-[2rem] md:p-9">
+              <article data-reveal="fade" className="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 sm:p-7 md:rounded-[2rem] md:p-9">
                 <p className="section-kicker">프로젝트 개요</p>
                 <div className="mt-5 space-y-5">
                   {detail.body.map((paragraph) => (
@@ -73,7 +75,7 @@ export default function MainDetailPage() {
                   <h2 className="mt-2 text-2xl font-semibold text-white">주요 성과</h2>
                   <ol className="mt-6 space-y-4">
                     {detail.researchMilestones.map((milestone) => (
-                      <li key={milestone.date + milestone.title} className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 sm:p-5">
+                      <li key={milestone.date + milestone.title} data-reveal="fade" className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 sm:p-5">
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400">
                           <time>{milestone.date}</time><span>·</span><span>{milestone.label}</span>
                         </div>
@@ -93,7 +95,7 @@ export default function MainDetailPage() {
                   <p className="mt-3 text-sm leading-6 text-slate-400">실제 시뮬레이션 화면을 기록한 영상입니다. 공식 평가 점수와 제출 여부는 위 근거 문서에서 별도로 확인할 수 있습니다.</p>
                   <div className="mt-6 grid gap-5">
                     {detail.videos.map((clip) => (
-                      <figure key={clip.src} className="overflow-hidden rounded-2xl border border-slate-800 bg-black">
+                      <figure key={clip.src} data-reveal="fade" className="overflow-hidden rounded-2xl border border-slate-800 bg-black">
                         <h3 className="px-4 py-4 text-base font-medium text-white sm:px-5">{clip.title}</h3>
                         <video className="aspect-video w-full object-contain" controls playsInline preload="metadata" poster={clip.poster}>
                           <source src={clip.src} type="video/mp4" />
@@ -126,7 +128,7 @@ export default function MainDetailPage() {
                   <h2 className="mt-2 text-2xl font-semibold text-white">프로젝트 갤러리</h2>
                   <div className="mt-5 grid gap-4 sm:grid-cols-2">
                     {detail.gallery.map((item) => (
-                      <figure key={item.src} className="overflow-hidden rounded-2xl border border-slate-800 bg-black/30">
+                      <figure key={item.src} data-reveal="fade" className="overflow-hidden rounded-2xl border border-slate-800 bg-black/30">
                         <img src={item.src} alt={item.alt} className="aspect-[4/3] w-full object-cover" loading="lazy" />
                         {item.caption && <figcaption className="p-4 text-xs leading-5 text-slate-400">{item.caption}</figcaption>}
                       </figure>
@@ -139,7 +141,7 @@ export default function MainDetailPage() {
             <aside className="space-y-5">
               <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 sm:p-6 md:rounded-[2rem]">
                 <p className="section-kicker">핵심 정보</p>
-                <div className="mt-4 space-y-3">
+                <div className="mt-4 space-y-3" data-reveal="fade">
                   {detail.metrics.map((metric) => <div key={metric} className="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-sm leading-6 text-slate-200">{metric}</div>)}
                 </div>
               </div>

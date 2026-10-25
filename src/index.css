@@ -110,3 +110,102 @@ a:focus-visible, button:focus-visible { outline: 2px solid #fff; outline-offset:
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+
+/* Motion system: transform/opacity only, no animation framework or scroll handler. */
+.scroll-progress {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 120;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, #737373, #f5f5f5);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+@keyframes site-scroll-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@supports (animation-timeline: scroll()) {
+  .scroll-progress { animation: site-scroll-progress linear both; animation-timeline: scroll(root block); }
+}
+
+/* Elements are visible without JS and in reduced-motion settings. */
+[data-reveal="fade"], .tech-row[data-reveal="row"] {
+  transition: opacity .72s ease, transform .85s cubic-bezier(.22,1,.36,1);
+}
+[data-reveal="fade"].motion-pending {
+  opacity: 0;
+  transform: translate3d(0,26px,0);
+}
+.tech-row[data-reveal="row"].motion-pending {
+  opacity: .42;
+  transform: translate3d(0,34px,0);
+}
+[data-reveal="fade"].motion-visible, .tech-row[data-reveal="row"].motion-visible {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+.project-panel[data-reveal="scene"] > .project-media {
+  transform: scale(1.065);
+  transition: transform 1.5s cubic-bezier(.22,1,.36,1);
+}
+.project-panel[data-reveal="scene"].motion-visible > .project-media {
+  transform: scale(1);
+}
+.project-panel[data-reveal="scene"] > .project-copy {
+  transition: opacity .8s ease, transform 1s cubic-bezier(.22,1,.36,1);
+}
+.project-panel[data-reveal="scene"].motion-pending > .project-copy {
+  opacity: 0;
+  transform: translate3d(0,44px,0);
+}
+.project-panel[data-reveal="scene"].motion-visible > .project-copy {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+@keyframes hero-rise {
+  from { opacity: 0; transform: translate3d(0,22px,0); }
+  to { opacity: 1; transform: translate3d(0,0,0); }
+}
+@keyframes hero-image-entrance {
+  from { transform: scale(1.07); }
+  to { transform: scale(1); }
+}
+.mission-hero > .project-media {
+  animation: hero-image-entrance 1.8s cubic-bezier(.22,1,.36,1) both;
+}
+.mission-hero-copy > .eyebrow,
+.mission-hero-copy > h1,
+.mission-hero-copy > p:last-child,
+.detail-hero h1,
+.detail-hero .status-pill,
+.test-log-hero h1,
+.subpage-hero .subpage-title {
+  animation: hero-rise .85s cubic-bezier(.22,1,.36,1) both;
+}
+.mission-hero-copy > h1, .detail-hero h1 { animation-delay: .15s; }
+.mission-hero-copy > p:last-child { animation-delay: .3s; }
+.detail-hero .status-pill { animation-delay: .08s; }
+.test-log-hero h1, .subpage-hero .subpage-title { animation-delay: .12s; }
+@media (hover: hover) and (pointer: fine) {
+  .outline-cta { transition: background .22s ease, color .22s ease, transform .25s ease, box-shadow .25s ease; }
+  .outline-cta:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0,0,0,.25); }
+  .outline-cta svg, .text-cta svg, .test-record-link svg { transition: transform .25s ease; }
+  .outline-cta:hover svg, .text-cta:hover svg, .test-record-link:hover svg { transform: translateX(4px); }
+  .project-panel:hover .project-media { transform: scale(1.025); }
+  .project-panel[data-reveal="scene"].motion-visible:hover .project-media { transform: scale(1.025); }
+}
+@media (max-width: 640px) {
+  [data-reveal="fade"].motion-pending { transform: translate3d(0,14px,0); }
+  .project-panel[data-reveal="scene"].motion-pending > .project-copy { transform: translate3d(0,22px,0); }
+  .project-panel[data-reveal="scene"] > .project-media { transform: scale(1.035); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal].motion-pending, [data-reveal].motion-visible, 
+  .project-panel[data-reveal="scene"] > .project-copy,
+  .project-panel[data-reveal="scene"] > .project-media {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .scroll-progress { animation: none !important; display: none; }
+}
