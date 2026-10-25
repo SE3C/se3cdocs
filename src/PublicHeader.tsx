@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Github, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -14,22 +14,50 @@ type PublicHeaderProps = { isChromeHidden?: boolean };
 
 export default function PublicHeader({ isChromeHidden = false }: PublicHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuTrigger = useRef<HTMLButtonElement>(null);
+  const mobileDialog = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isMenuOpen) return;
 
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    mobileDialog.current?.querySelector<HTMLButtonElement>('button[aria-label="메뉴 닫기"]')?.focus();
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsMenuOpen(false);
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+        return;
+      }
+      if (event.key !== "Tab" || !mobileDialog.current) return;
+
+      const items = Array.from(mobileDialog.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'));
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (!first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      menuTrigger.current?.focus();
+    };
   }, [isMenuOpen]);
 
   return (
     <header
-      className="fixed inset-x-0 top-0 z-50 transition-all duration-500"
-      style={{ top: isChromeHidden ? "-76px" : "0", opacity: isChromeHidden ? 0 : 1, pointerEvents: isChromeHidden ? "none" : "auto" }}
+      className="fixed inset-x-0 top-0 z-50 transition-transform duration-300 ease-out"
+      style={{ transform: isChromeHidden && !isMenuOpen ? "translateY(-100%)" : "translateY(0)" }}
+      inert={isChromeHidden && !isMenuOpen}
     >
       <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/80 via-black/35 to-transparent" />
       <div className="relative mx-auto flex h-[72px] w-full max-w-[1500px] items-center justify-between px-5 sm:px-7 lg:px-10">
@@ -47,18 +75,20 @@ export default function PublicHeader({ isChromeHidden = false }: PublicHeaderPro
         </nav>
 
         <button
+          ref={menuTrigger}
           type="button"
           onClick={() => setIsMenuOpen((value) => !value)}
           className="relative z-20 flex h-11 w-11 items-center justify-center text-white lg:hidden"
           aria-label={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
           aria-expanded={isMenuOpen}
+          aria-controls="se3c-mobile-menu"
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {isMenuOpen && createPortal(
-        <div className="mobile-menu" role="dialog" aria-label="사이트 메뉴">
+        <div id="se3c-mobile-menu" ref={mobileDialog} className="mobile-menu" role="dialog" aria-label="사이트 메뉴" aria-modal="true">
           <button
             type="button"
             onClick={() => setIsMenuOpen(false)}

@@ -1,28 +1,58 @@
 import { useEffect, useRef, useState } from "react";
 
+/**
+ * Direction-aware header with accumulated scrolling distance.
+ * Small trackpad/touch increments must still reveal navigation.
+ */
 export default function useHideChromeOnScroll() {
-  const [isChromeHidden, setIsChromeHidden] = useState(false);
-  const lastScrollYRef = useRef(0);
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
+  const accumulated = useRef(0);
+  const lastDirection = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const scrollDelta = currentScrollY - lastScrollYRef.current;
+    lastY.current = Math.max(0, window.scrollY);
 
-      if (currentScrollY > 60 && scrollDelta > 0) {
-        setIsChromeHidden(true);
-      } else if (scrollDelta < -24) {
-        setIsChromeHidden(false);
+    const onScroll = () => {
+      const y = Math.max(0, window.scrollY);
+      const delta = y - lastY.current;
+      lastY.current = y;
+
+      if (y <= 64) {
+        accumulated.current = 0;
+        setHidden(false);
+        return;
       }
 
-      lastScrollYRef.current = currentScrollY;
+      if (delta === 0) return;
+      const direction = Math.sign(delta);
+
+      if (direction !== lastDirection.current) {
+        accumulated.current = 0;
+        lastDirection.current = direction;
+      }
+      accumulated.current += Math.abs(delta);
+
+      if (direction > 0 && y > 128 && accumulated.current >= 40) {
+        setHidden(true);
+        accumulated.current = 0;
+      } else if (direction < 0 && accumulated.current >= 18) {
+        setHidden(false);
+        accumulated.current = 0;
+      }
     };
 
-    lastScrollYRef.current = window.scrollY;
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    const onKeyboardNavigation = (event: KeyboardEvent) => {
+      if (event.key === "Tab") setHidden(false);
+    };
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("keydown", onKeyboardNavigation);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("keydown", onKeyboardNavigation);
+    };
   }, []);
 
-  return isChromeHidden;
+  return hidden;
 }

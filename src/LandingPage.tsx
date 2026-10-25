@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowRight, Github } from "lucide-react";
+import { ArrowDown, ArrowRight, Github, Pause, Play } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import heroImage from "./assets/expo-booth.jpg";
@@ -13,6 +13,94 @@ import useHideChromeOnScroll from "./useHideChromeOnScroll";
 import useScrollReveal from "./useScrollReveal";
 
 type ProjectSectionProps = { index: string; eyebrow: string; title: string; description: string; to: string; image: string; align?: "left" | "right"; video?: string; muted?: boolean };
+
+function ProjectBackgroundVideo({ src, poster }: { src: string; poster: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [visible, setVisible] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [userChoice, setUserChoice] = useState<"auto" | "pause" | "play">("auto");
+  const [playing, setPlaying] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePreference = () => setReducedMotion(preference.matches);
+    updatePreference();
+    preference.addEventListener("change", updatePreference);
+
+    if (!("IntersectionObserver" in window)) {
+      setVisible(true);
+      return () => preference.removeEventListener("change", updatePreference);
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setVisible(entry.isIntersecting);
+    }, { threshold: 0.15 });
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
+      preference.removeEventListener("change", updatePreference);
+    };
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const shouldPlay = visible && userChoice !== "pause" &&
+      (userChoice === "play" || !reducedMotion);
+
+    if (!shouldPlay) {
+      video.pause();
+      return;
+    }
+
+    void video.play().catch(() => {
+      // A blocked autoplay is not an error; the user can start playback manually.
+      setPlaying(false);
+    });
+  }, [visible, reducedMotion, userChoice]);
+
+  const togglePlayback = () => {
+    if (playing) {
+      setUserChoice("pause");
+      videoRef.current?.pause();
+    } else {
+      setUserChoice("play");
+    }
+  };
+
+  return (
+    <>
+      <video
+        ref={videoRef}
+        className="project-media"
+        muted
+        loop
+        playsInline
+        preload="none"
+        poster={poster}
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+      >
+        <source src={src} type="video/mp4" />
+      </video>
+      <button
+        type="button"
+        className="project-motion-toggle"
+        onClick={togglePlayback}
+        aria-label={playing ? "배경 영상 일시정지" : "배경 영상 재생"}
+        aria-pressed={playing}
+      >
+        {playing ? <Pause size={14} aria-hidden="true" /> : <Play size={14} aria-hidden="true" />}
+        <span>{playing ? "일시정지" : "영상 재생"}</span>
+      </button>
+    </>
+  );
+}
 
 const scenes = [
   { index: "01", label: "CubeSat" },
@@ -60,38 +148,6 @@ function useActiveScene() {
   return { active, visible };
 }
 
-function AnimatedCount({ value }: { value: number }) {
-  const target = useRef<HTMLSpanElement>(null);
-  const [count, setCount] = useState(value);
-
-  useEffect(() => {
-    if (!target.current || !("IntersectionObserver" in window) ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    let frame = 0;
-    let started = false;
-    const observer = new IntersectionObserver((entries) => {
-      if (!entries.some((entry) => entry.isIntersecting) || started) return;
-      started = true;
-      observer.disconnect();
-      const start = performance.now();
-      const tick = (now: number) => {
-        const t = Math.min(1, (now - start) / 950);
-        setCount(Math.round(value * (1 - Math.pow(1 - t, 3))));
-        if (t < 1) frame = requestAnimationFrame(tick);
-      };
-      setCount(0);
-      frame = requestAnimationFrame(tick);
-    }, { threshold: 0.5 });
-    observer.observe(target.current);
-    return () => { observer.disconnect(); cancelAnimationFrame(frame); };
-  }, [value]);
-
-  return <>
-    <span ref={target} aria-hidden="true">{String(count).padStart(2, "0")}</span>
-    <span className="sr-only">{String(value).padStart(2, "0")}</span>
-  </>;
-}
-
 const milestones = [
   ["2025.09", "SWIFTUI · AI WORKSHOP", "SwiftUI와 생성형 AI를 활용한 iOS 앱 개발 실습을 진행했습니다."],
   ["2025.11", "SPACE OUTREACH", "송파교육박람회에서 우주탐사 체험 부스를 운영했습니다."],
@@ -106,7 +162,7 @@ const milestones = [
 
 function ProjectSection({ index, eyebrow, title, description, to, image, align = "left", video, muted = false }: ProjectSectionProps) {
   return <section id={`project-${index}`} className="project-panel" data-scene={index} data-reveal="scene">
-    {video ? <video className="project-media" autoPlay muted loop playsInline preload="metadata" poster={image}><source src={video} type="video/mp4" /></video> : <img src={image} alt="" className="project-media" loading="lazy" />}
+    {video ? <ProjectBackgroundVideo src={video} poster={image} /> : <img src={image} alt="" className="project-media" loading="lazy" />}
     <div className={`project-overlay ${muted ? "project-overlay-heavy" : ""}`} />
     <div className={`project-copy ${align === "right" ? "project-copy-right" : ""}`}>
       <p className="project-index">{index}</p><p className="eyebrow">{eyebrow}</p><h2>{title}</h2><p className="project-description">{description}</p>
@@ -124,7 +180,7 @@ export default function LandingPage() {
 
   return <div className="bg-black text-white">
     <PublicHeader isChromeHidden={isChromeHidden} />
-    <nav className={`scene-nav ${visible ? "is-visible" : ""}`} aria-label="프로젝트 구역 빠른 이동">
+    <nav className={`scene-nav ${visible ? "is-visible" : ""}`} aria-label="프로젝트 구역 빠른 이동" aria-hidden={!visible} inert={!visible}>
       <span className="scene-nav-heading" aria-hidden="true">PROJECTS</span>
       {scenes.map((scene) => (
         <a
@@ -141,11 +197,11 @@ export default function LandingPage() {
       <section className="mission-hero">
         <img src={heroImage} alt="SE3C 제작 활동" className="project-media" /><div className="mission-hero-overlay" />
         <div className="mission-hero-copy"><p className="eyebrow">SE3C · SPACE EXPLORATION ENGINEERING EXPERIMENTAL CLUB</p><h1>상상하던 걸,<br />실제 프로젝트로<br />만들다.</h1><p>설계하고, 만들고, 시험하고, 기록합니다.<br />SE3C는 공학의 다음 단계를 직접 검증합니다.</p></div>
-        <a href="#mission" aria-label="미션으로 이동" className="scroll-cue"><span>SCROLL TO EXPLORE</span><ArrowDown size={20} /></a>
+        <a href="#mission" aria-label="미션으로 이동" className="scroll-cue"><ArrowDown size={20} /></a>
       </section>
       <section id="mission" className="mission-statement">
         <div className="mission-statement-copy" data-reveal="fade"><p className="eyebrow">OUR MISSION</p><h2>다음 실험은<br />이전 기록에서 시작됩니다.</h2><p>SE3C는 기구·회로·소프트웨어·운영을 하나의 검증 과정으로 연결합니다. 결과물과 실험 조건, 검증 데이터, 후속 성과를 함께 남겨 프로젝트가 다음 사람에게도 이어지게 만듭니다.</p><Link to="/tests" className="outline-cta">검증 기록 보기 <ArrowRight size={16} /></Link></div>
-        <dl className="mission-stats" data-reveal="fade" aria-label="SE3C 2026 활동 지표"><div><dt><AnimatedCount value={3} /></dt><dd>ACTIVE<br />PROJECT TRACKS</dd></div><div><dt><AnimatedCount value={4} /></dt><dd>ENGINEERING<br />DISCIPLINES</dd></div><div><dt>2026</dt><dd>PUBLIC<br />ENGINEERING LOG</dd></div></dl>
+        <dl className="mission-stats" data-reveal="fade" aria-label="SE3C 2026 활동 지표"><div><dt>03</dt><dd>ACTIVE<br />PROJECT TRACKS</dd></div><div><dt>04</dt><dd>ENGINEERING<br />DISCIPLINES</dd></div><div><dt>2026</dt><dd>PUBLIC<br />ENGINEERING LOG</dd></div></dl>
       </section>
       <div id="projects">
         <ProjectSection index="01" eyebrow="CUBESAT SYSTEM · ACTIVE" title="작은 위성을 직접 만들다." description="초기 큐브형 구조 시제품을 제작한 경험을 바탕으로 ESP32 중심의 소형 위성 제어 시스템을 개발하고 있습니다." to="/tech/cubesat" image={cubesatImage} />
