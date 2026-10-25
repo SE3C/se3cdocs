@@ -209,3 +209,160 @@ a:focus-visible, button:focus-visible { outline: 2px solid #fff; outline-offset:
   }
   .scroll-progress { animation: none !important; display: none; }
 }
+
+
+/* SE3C motion layer II: subtle editorial cues with no new animation dependency. */
+#projects { position: relative; }
+.project-panel { isolation: isolate; scroll-margin-top: 0; }
+.project-panel::after {
+  content: attr(data-scene);
+  position: absolute;
+  z-index: 2;
+  right: clamp(14px, 7vw, 128px);
+  bottom: clamp(38px, 7vh, 110px);
+  font-size: clamp(140px, 21vw, 390px);
+  font-weight: 700;
+  line-height: .8;
+  letter-spacing: -.095em;
+  color: rgba(255,255,255,.095);
+  pointer-events: none;
+  user-select: none;
+  opacity: .6;
+  transform: translate3d(0, 32px, 0);
+  transition: transform 1.25s cubic-bezier(.22,1,.36,1), opacity 1.25s ease;
+}
+.project-panel.motion-visible::after { opacity: 1; transform: translate3d(0,0,0); }
+.project-copy > .project-index { position: relative; display: inline-flex; align-items: center; gap: 16px; }
+.project-copy > .project-index::after {
+  content: "";
+  width: 48px;
+  height: 1px;
+  background: rgba(255,255,255,.75);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .8s cubic-bezier(.22,1,.36,1) .28s;
+}
+.project-panel.motion-visible .project-index::after { transform: scaleX(1); }
+.project-panel.motion-pending .project-copy > :is(.eyebrow,h2,.project-description,.outline-cta) {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+}
+.project-copy > :is(.eyebrow,h2,.project-description,.outline-cta) {
+  transition: opacity .7s ease, transform .75s cubic-bezier(.22,1,.36,1), background .22s ease, color .22s ease;
+}
+.project-panel.motion-visible .project-copy > :is(.eyebrow,h2,.project-description,.outline-cta) {
+  opacity: 1; transform: translate3d(0,0,0);
+}
+.project-copy > .eyebrow { transition-delay: .10s; }
+.project-copy > h2 { transition-delay: .18s; }
+.project-copy > .project-description { transition-delay: .28s; }
+.project-copy > .outline-cta { transition-delay: .36s; }
+.scene-nav {
+  display: none;
+}
+.mission-stats dt { font-variant-numeric: tabular-nums; }
+.mission-stats div { position: relative; }
+.mission-stats div::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,.7);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s cubic-bezier(.22,1,.36,1);
+}
+.mission-stats.motion-visible div::after { transform: scaleX(1); }
+.mission-stats.motion-visible div:nth-child(2)::after { transition-delay: .14s; }
+.mission-stats.motion-visible div:nth-child(3)::after { transition-delay: .28s; }
+.milestone-list li { position: relative; }
+.milestone-list li::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 16%;
+  height: 68%;
+  width: 2px;
+  background: rgba(255,255,255,.65);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .7s cubic-bezier(.22,1,.36,1) .12s;
+}
+.milestone-list li.motion-visible::before { transform: scaleY(1); }
+.tech-row::after, .test-record::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: rgba(255,255,255,.42);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s cubic-bezier(.22,1,.36,1);
+  pointer-events: none;
+}
+.tech-row.motion-visible::after, .test-record.motion-visible::after { transform: scaleX(1); }
+.test-record { position: relative; }
+.detail-hero img { animation: hero-image-entrance 1.7s cubic-bezier(.22,1,.36,1) both; }
+
+@media (min-width: 1024px) {
+  .scene-nav {
+    position: fixed;
+    z-index: 40;
+    top: 50%;
+    right: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 14px 8px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(5,5,5,.62);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transform: translate3d(10px,-50%,0);
+    pointer-events: none;
+    transition: opacity .45s ease, transform .45s ease;
+  }
+  .scene-nav.is-visible { opacity: 1; transform: translate3d(0,-50%,0); pointer-events: auto; }
+  .scene-nav-heading { font-size: 8px; letter-spacing: .12em; color: rgba(255,255,255,.48); writing-mode: vertical-rl; margin: 6px 0; }
+  .scene-nav a {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    width: 43px; height: 35px; font-size: 10px; font-weight: 600;
+    font-variant-numeric: tabular-nums; color: rgba(255,255,255,.5);
+    transition: color .25s ease, background .25s ease;
+  }
+  .scene-nav a:hover, .scene-nav a[aria-current="location"] { color: #fff; background: rgba(255,255,255,.09); }
+  .scene-nav-dot { width: 4px; height: 4px; flex: none; border-radius: 50%; background: currentColor; transition: transform .25s ease; }
+  .scene-nav a[aria-current="location"] .scene-nav-dot { transform: scale(1.9); }
+  .scene-nav a:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+}
+@media (max-width: 640px) {
+  .project-panel::after { font-size: 115px; right: 22px; bottom: 24px; opacity: .24; }
+  .project-panel.motion-visible::after { opacity: .24; }
+  .project-copy > .project-index::after { width: 28px; }
+  .scroll-cue span { font-size: 9px; }
+}
+.scroll-cue { display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: 9px; font-weight: 600; letter-spacing: .17em; }
+.scroll-cue span { white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .project-panel::after,
+  .project-panel.motion-visible::after,
+  .project-copy > :is(.eyebrow,h2,.project-description,.outline-cta),
+  .project-panel.motion-pending .project-copy > :is(.eyebrow,h2,.project-description,.outline-cta) {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .project-copy > .project-index::after, .milestone-list li::before, .mission-stats div::after,
+  .tech-row::after, .test-record::after { transform: none !important; transition: none !important; }
+  .scene-nav { transition: none; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-panel.motion-visible .project-copy > .outline-cta:hover {
+    transform: translate3d(0,-3px,0);
+    transition-delay: 0s;
+  }
+}

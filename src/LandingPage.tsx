@@ -1,6 +1,6 @@
 import { ArrowDown, ArrowRight, Github } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import heroImage from "./assets/expo-booth.jpg";
 import cubesatImage from "./assets/2026/cubesat-integration.webp";
 import rocketImage from "./assets/2026/rocket-workbench.webp";
@@ -13,6 +13,84 @@ import useHideChromeOnScroll from "./useHideChromeOnScroll";
 import useScrollReveal from "./useScrollReveal";
 
 type ProjectSectionProps = { index: string; eyebrow: string; title: string; description: string; to: string; image: string; align?: "left" | "right"; video?: string; muted?: boolean };
+
+const scenes = [
+  { index: "01", label: "CubeSat" },
+  { index: "02", label: "Rocket" },
+  { index: "03", label: "Robotics & AI" },
+  { index: "04", label: "CAD" },
+  { index: "05", label: "Software" },
+  { index: "06", label: "Outreach" },
+];
+
+/** Tracks the section intersecting the center of the viewport without scroll polling. */
+function useActiveScene() {
+  const [active, setActive] = useState("01");
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const container = document.getElementById("projects");
+    if (!container || !("IntersectionObserver" in window)) return;
+
+    const containerObserver = new IntersectionObserver(([entry]) => {
+      setVisible(entry.isIntersecting);
+    });
+    containerObserver.observe(container);
+
+    const sceneObserver = new IntersectionObserver((entries) => {
+      const entering = entries.filter((entry) => entry.isIntersecting);
+      if (entering.length === 0) return;
+      entering.sort((a, b) =>
+        Math.abs(a.boundingClientRect.top + a.boundingClientRect.height / 2 - window.innerHeight / 2) -
+        Math.abs(b.boundingClientRect.top + b.boundingClientRect.height / 2 - window.innerHeight / 2)
+      );
+      setActive((entering[0].target as HTMLElement).dataset.scene ?? "01");
+    }, { rootMargin: "-35% 0px -45% 0px" });
+
+    container.querySelectorAll<HTMLElement>(".project-panel[data-scene]").forEach((element) => {
+      sceneObserver.observe(element);
+    });
+
+    return () => {
+      containerObserver.disconnect();
+      sceneObserver.disconnect();
+    };
+  }, []);
+
+  return { active, visible };
+}
+
+function AnimatedCount({ value }: { value: number }) {
+  const target = useRef<HTMLSpanElement>(null);
+  const [count, setCount] = useState(value);
+
+  useEffect(() => {
+    if (!target.current || !("IntersectionObserver" in window) ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let frame = 0;
+    let started = false;
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting) || started) return;
+      started = true;
+      observer.disconnect();
+      const start = performance.now();
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / 950);
+        setCount(Math.round(value * (1 - Math.pow(1 - t, 3))));
+        if (t < 1) frame = requestAnimationFrame(tick);
+      };
+      setCount(0);
+      frame = requestAnimationFrame(tick);
+    }, { threshold: 0.5 });
+    observer.observe(target.current);
+    return () => { observer.disconnect(); cancelAnimationFrame(frame); };
+  }, [value]);
+
+  return <>
+    <span ref={target} aria-hidden="true">{String(count).padStart(2, "0")}</span>
+    <span className="sr-only">{String(value).padStart(2, "0")}</span>
+  </>;
+}
 
 const milestones = [
   ["2025.09", "SWIFTUI · AI WORKSHOP", "SwiftUI와 생성형 AI를 활용한 iOS 앱 개발 실습을 진행했습니다."],
@@ -27,7 +105,7 @@ const milestones = [
 ];
 
 function ProjectSection({ index, eyebrow, title, description, to, image, align = "left", video, muted = false }: ProjectSectionProps) {
-  return <section className="project-panel" data-reveal="scene">
+  return <section id={`project-${index}`} className="project-panel" data-scene={index} data-reveal="scene">
     {video ? <video className="project-media" autoPlay muted loop playsInline preload="metadata" poster={image}><source src={video} type="video/mp4" /></video> : <img src={image} alt="" className="project-media" loading="lazy" />}
     <div className={`project-overlay ${muted ? "project-overlay-heavy" : ""}`} />
     <div className={`project-copy ${align === "right" ? "project-copy-right" : ""}`}>
@@ -39,21 +117,35 @@ function ProjectSection({ index, eyebrow, title, description, to, image, align =
 
 export default function LandingPage() {
   const isChromeHidden = useHideChromeOnScroll();
+  const { active, visible } = useActiveScene();
   useScrollReveal();
   const location = useLocation();
   useEffect(() => { window.scrollTo({ top: 0, behavior: "auto" }); }, [location.pathname]);
 
   return <div className="bg-black text-white">
     <PublicHeader isChromeHidden={isChromeHidden} />
+    <nav className={`scene-nav ${visible ? "is-visible" : ""}`} aria-label="프로젝트 구역 빠른 이동">
+      <span className="scene-nav-heading" aria-hidden="true">PROJECTS</span>
+      {scenes.map((scene) => (
+        <a
+          key={scene.index}
+          href={`#project-${scene.index}`}
+          aria-label={`${scene.index}: ${scene.label} 프로젝트로 이동`}
+          aria-current={active === scene.index ? "location" : undefined}
+          title={scene.label}
+        ><span className="scene-nav-dot" aria-hidden="true" /><span>{scene.index}</span></a>
+      ))}
+      <span className="scene-nav-heading" aria-hidden="true">06 / 06</span>
+    </nav>
     <main>
       <section className="mission-hero">
         <img src={heroImage} alt="SE3C 제작 활동" className="project-media" /><div className="mission-hero-overlay" />
         <div className="mission-hero-copy"><p className="eyebrow">SE3C · SPACE EXPLORATION ENGINEERING EXPERIMENTAL CLUB</p><h1>상상하던 걸,<br />실제 프로젝트로<br />만들다.</h1><p>설계하고, 만들고, 시험하고, 기록합니다.<br />SE3C는 공학의 다음 단계를 직접 검증합니다.</p></div>
-        <a href="#mission" aria-label="미션으로 이동" className="scroll-cue"><ArrowDown size={22} /></a>
+        <a href="#mission" aria-label="미션으로 이동" className="scroll-cue"><span>SCROLL TO EXPLORE</span><ArrowDown size={20} /></a>
       </section>
       <section id="mission" className="mission-statement">
         <div className="mission-statement-copy" data-reveal="fade"><p className="eyebrow">OUR MISSION</p><h2>다음 실험은<br />이전 기록에서 시작됩니다.</h2><p>SE3C는 기구·회로·소프트웨어·운영을 하나의 검증 과정으로 연결합니다. 결과물과 실험 조건, 검증 데이터, 후속 성과를 함께 남겨 프로젝트가 다음 사람에게도 이어지게 만듭니다.</p><Link to="/tests" className="outline-cta">검증 기록 보기 <ArrowRight size={16} /></Link></div>
-        <dl className="mission-stats" data-reveal="fade" aria-label="SE3C 2026 활동 지표"><div><dt>03</dt><dd>ACTIVE<br />PROJECT TRACKS</dd></div><div><dt>04</dt><dd>ENGINEERING<br />DISCIPLINES</dd></div><div><dt>2026</dt><dd>PUBLIC<br />ENGINEERING LOG</dd></div></dl>
+        <dl className="mission-stats" data-reveal="fade" aria-label="SE3C 2026 활동 지표"><div><dt><AnimatedCount value={3} /></dt><dd>ACTIVE<br />PROJECT TRACKS</dd></div><div><dt><AnimatedCount value={4} /></dt><dd>ENGINEERING<br />DISCIPLINES</dd></div><div><dt>2026</dt><dd>PUBLIC<br />ENGINEERING LOG</dd></div></dl>
       </section>
       <div id="projects">
         <ProjectSection index="01" eyebrow="CUBESAT SYSTEM · ACTIVE" title="작은 위성을 직접 만들다." description="초기 큐브형 구조 시제품을 제작한 경험을 바탕으로 ESP32 중심의 소형 위성 제어 시스템을 개발하고 있습니다." to="/tech/cubesat" image={cubesatImage} />
