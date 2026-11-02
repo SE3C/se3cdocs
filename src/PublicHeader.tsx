@@ -7,6 +7,7 @@ import logoImage from "./assets/se3c_logo_white.png";
 const navLinks = [
   { label: "PROJECTS", to: "/projects" },
   { label: "TEST LOG", to: "/tests" },
+  { label: "HISTORY", to: "/history" },
   { label: "ABOUT SE3C", to: "/team" },
 ];
 

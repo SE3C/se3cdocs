@@ -149,6 +149,8 @@ function useActiveScene() {
 }
 
 const milestones = [
+  ["2025.05", "HELIUM · INITIAL FLIGHT TEST", "당시 홈페이지에 장비 미탑재 헬륨 발사 테스트 기록이 남아 있습니다."],
+  ["2025.05", "ROCKET · INITIAL COMBUSTION TEST", "로켓팀 첫 소규모 연소 실험의 2025년 당시 기록을 보존합니다."],
   ["2025.09", "SWIFTUI · AI WORKSHOP", "SwiftUI와 생성형 AI를 활용한 iOS 앱 개발 실습을 진행했습니다."],
   ["2025.11", "SPACE OUTREACH", "송파교육박람회에서 우주탐사 체험 부스를 운영했습니다."],
   ["03", "TEAM FORMATION", "프로젝트 중심의 역할과 기록 체계를 구성했습니다."],
@@ -211,7 +213,7 @@ export default function LandingPage() {
         <ProjectSection index="05" eyebrow="EMBEDDED SOFTWARE · ACTIVE" title="하드웨어의 상태를 코드로 표현하다." description="2026년 10월, LED·부저 상태 표시 모듈의 C++ 헤더와 구현 구조를 검토했습니다. 코드 작업 현장을 사진으로 기록했습니다." to="/tech/software" image={softwareCodeImage} />
         <ProjectSection index="06" eyebrow="SPACE EDUCATION · OUTREACH" title="우주공학을 함께 체험하다." description="2025년 송파교육박람회에서 우주탐사차량과 우주정거장 만들기 체험 부스를 운영했습니다." to="/outreach" image={heroImage} align="right" />
       </div>
-      <section className="engineering-log"><div className="engineering-log-heading" data-reveal="fade"><p className="eyebrow">2025–2026 ENGINEERING LOG</p><h2>만든 것, 시험한 것,<br />그리고 다음 단계.</h2></div><ol className="milestone-list">{milestones.map(([date, title, description]) => <li key={title} data-reveal="fade"><p>{date}</p><div><h3>{title}</h3><span>{description}</span></div></li>)}</ol><div className="engineering-log-actions" data-reveal="fade"><Link to="/projects" className="outline-cta">전체 프로젝트 보기 <ArrowRight size={16} /></Link><a href="https://github.com/SE3C" target="_blank" rel="noreferrer" className="text-cta"><Github size={17} /> GitHub에서 보기</a></div></section>
+      <section className="engineering-log"><div className="engineering-log-heading" data-reveal="fade"><p className="eyebrow">2025–2026 ENGINEERING LOG</p><h2>만든 것, 시험한 것,<br />그리고 다음 단계.</h2></div><ol className="milestone-list">{milestones.map(([date, title, description]) => <li key={title} data-reveal="fade"><p>{date}</p><div><h3>{title}</h3><span>{description}</span></div></li>)}</ol><div className="engineering-log-actions" data-reveal="fade"><Link to="/projects" className="outline-cta">전체 프로젝트 보기 <ArrowRight size={16} /></Link><Link to="/history" className="text-cta">2025년 아카이브 <ArrowRight size={16} /></Link><a href="https://github.com/SE3C" target="_blank" rel="noreferrer" className="text-cta"><Github size={17} /> GitHub에서 보기</a></div></section>
     </main>
     <PublicFooter />
   </div>;

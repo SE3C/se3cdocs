@@ -53,3 +53,11 @@ npm run lint
 The site publishes verified outcomes and curated photographs, not detailed implementation files. The ESP32 project is described at the overall design level, and the earlier Raspberry Pi prototype is labeled as historical. CAD work is presented through already-public 3D models, concept sketches, and structural mockup images. No current flight completion or new equipment acquisition is implied.
 
 Do not publish firmware, circuit connections, exact component configurations, internal PDFs, personal data, or private budget records here. New media requires separate review before publication.
+
+## 2025 history archive (2026-11)
+
+- `/history`: 2025 활동 연혁, 당시 원본 출처, 2026 프로젝트 연결
+- `/legacy/2025/index.html`: 이전 운영진의 홍보 사이트를 화면 구조를 유지한 채 복원한 보존본
+- 원본: https://github.com/StudentsView/SE3C (revision `d7800445ca9cd47496fff52b37dc8a5b9751a2eb`)
+- HTML/CSS/JS는 보존본에 편입, 배경 이미지와 영상은 원본 GitHub 고정 리비전을 참조합니다. 2025년 지원 폼은 비활성화했습니다.
+- 오래된 자료는 `ARCHIVED` 로 표시하며 당시 주장과 현재 확인된 실험 결과를 구분합니다.

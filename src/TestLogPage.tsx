@@ -13,6 +13,8 @@ const testRecords = [
   { id: "LOG 005", date: "2026.06", status: "DOCUMENTED", title: "CubeSat & CAD prototyping", description: "큐브형 위성 구조 시제품과 로켓 노즐 3D 형상 모델링 등 실제 제작·설계 결과물을 기록했습니다.", to: "/tech/fabrication" },
   { id: "LOG 006", date: "2025.11", status: "DOCUMENTED", title: "Songpa Education Expo · STEM outreach", description: "우주탐사차량과 우주정거장 만들기 체험 부스를 운영한 활동을 공개된 행사 사진과 함께 소개합니다.", to: "/outreach" },
   { id: "LOG 007", date: "2025.09", status: "DOCUMENTED", title: "SwiftUI · AI app development workshop", description: "생성형 AI와 Swift를 이용한 iOS 앱 아이디어 구상, 코드 작성 및 디버깅 실습 활동을 기록했습니다.", to: "/outreach" },
+  { id: "LOG 008", date: "2025.05", status: "ARCHIVED", title: "2025 · Initial helium flight test", description: "당시 웹사이트에 기록된 위성·프로그래밍팀의 장비 미탑재 발사 테스트. 세부 성과는 미확인입니다.", to: "/history" },
+  { id: "LOG 009", date: "2025.05", status: "ARCHIVED", title: "2025 · Rocket combustion experiment", description: "당시 웹사이트에 기록된 로켓팀의 첫 소규모 연소 실험. 측정값·성능 검증은 주장하지 않습니다.", to: "/history" },
 ];
 
 export default function TestLogPage() {
